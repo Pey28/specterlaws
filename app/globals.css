@@ -77,6 +77,8 @@ body::before {
     );
   opacity: 0.35;
   mix-blend-mode: screen;
+  will-change: transform;
+  contain: layout paint;
   transform: translateZ(0);
   animation: lexcr-float 14s ease-in-out infinite;
 }
@@ -270,6 +272,7 @@ body::before {
   display: flex;
   gap: 1rem;
   width: max-content;
+  will-change: transform;
   animation: lexcr-marquee 40s linear infinite;
 }
 

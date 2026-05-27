@@ -12,10 +12,14 @@ export default function Navbar() {
   const autenticado = !!session?.user;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let rafId = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => setScrolled(window.scrollY > 8));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); cancelAnimationFrame(rafId); };
   }, []);
 
   useEffect(() => {
@@ -33,15 +37,15 @@ export default function Navbar() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navClass}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className={`flex items-center justify-between gap-2 transition-all duration-300 ${scrolled ? "h-14" : "h-16"}`}>
+          <div className={`flex items-center justify-between gap-2 transition-all duration-300 ${scrolled ? "h-16" : "h-20"}`}>
             <Link href="/" className="flex items-center shrink-0">
               <Image
                 src="/logo.png"
                 alt="Specterlaws"
-                width={160}
-                height={52}
-                className="h-10 w-auto object-contain"
+                width={280}
+                height={153}
                 priority
+                className="h-16 sm:h-20 w-auto object-contain"
               />
             </Link>
 

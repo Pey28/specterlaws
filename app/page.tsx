@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AreasLegales from "@/components/AreasLegales";
@@ -9,6 +10,10 @@ const Confianza = dynamic(() => import("@/components/Confianza"));
 const CTA = dynamic(() => import("@/components/CTA"));
 const Footer = dynamic(() => import("@/components/Footer"));
 
+function SectionSkeleton() {
+  return <div className="py-24 w-full" aria-hidden="true" />;
+}
+
 export default function Home() {
   return (
     <>
@@ -16,12 +21,22 @@ export default function Home() {
       <main className="pt-16">
         <Hero />
         <AreasLegales />
-        <Documentos />
-        <ComoFunciona />
-        <Confianza />
-        <CTA />
+        <Suspense fallback={<SectionSkeleton />}>
+          <Documentos />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ComoFunciona />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <Confianza />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <CTA />
+        </Suspense>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </>
   );
 }
