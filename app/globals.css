@@ -2,21 +2,21 @@
 
 :root {
   /* Premium dark (legal-tech) */
-  --background: #0a0f1e; /* deep blue-black */
-  --foreground: #eaf0ff; /* near-white */
-  --muted: #a8b3cf;
-  --muted-2: #7e8bb0;
+  --background: #0b1220; /* deep slate navy */
+  --foreground: #e6ecf8; /* soft near-white */
+  --muted: #9ba8c2;
+  --muted-2: #75839f;
   --surface: rgba(255, 255, 255, 0.06);
   --surface-2: rgba(255, 255, 255, 0.09);
   --border: rgba(255, 255, 255, 0.12);
-  --border-strong: rgba(120, 160, 255, 0.22);
-  --ring: rgba(59, 130, 246, 0.35);
+  --border-strong: rgba(118, 146, 197, 0.24);
+  --ring: rgba(79, 111, 168, 0.35);
 
   /* Brand accents (CR) tuned for dark */
-  --cr-blue: #3b82f6; /* electric blue */
-  --cr-red: #ff4d6d; /* soft red */
-  --cr-blue-light: #77a7ff;
-  --cr-red-light: #ff7a93;
+  --cr-blue: #4a6fae; /* refined steel blue */
+  --cr-red: #8f4a5a; /* muted garnet */
+  --cr-blue-light: #6f8fbe;
+  --cr-red-light: #a86675;
 }
 
 @theme inline {
@@ -39,9 +39,9 @@
 }
 
 body {
-  background: radial-gradient(1100px 700px at 20% -10%, rgba(59, 130, 246, 0.22), transparent 60%),
-    radial-gradient(900px 600px at 90% 10%, rgba(255, 77, 109, 0.14), transparent 55%),
-    radial-gradient(800px 520px at 50% 110%, rgba(119, 167, 255, 0.16), transparent 60%),
+  background: radial-gradient(1100px 700px at 20% -10%, rgba(74, 111, 174, 0.18), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(143, 74, 90, 0.1), transparent 55%),
+    radial-gradient(800px 520px at 50% 110%, rgba(111, 143, 190, 0.14), transparent 60%),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
@@ -50,6 +50,11 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+html,
+body {
+  overflow-x: hidden;
 }
 
 /* Subtle animated lines + particles (very low contrast) */
@@ -97,18 +102,15 @@ body::before {
 }
 
 .lexcr-card {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(120, 160, 255, 0.18);
-  box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
 }
 
 .lexcr-card:hover {
-  box-shadow:
-    0 22px 70px rgba(0, 0, 0, 0.62),
-    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
-    0 0 26px rgba(59, 130, 246, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.16);
 }
 
 .lexcr-glow-blue {
@@ -132,4 +134,337 @@ body::before {
 
 .lexcr-animate-in {
   animation: lexcr-fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Harvey-like design system */
+.lexcr-section {
+  position: relative;
+}
+
+.lexcr-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cr-red);
+}
+
+.lexcr-stat-value {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+.lexcr-stat-label {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+.lexcr-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  background: linear-gradient(135deg, var(--cr-red) 0%, #7a4250 100%);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+}
+
+.lexcr-btn-primary:hover {
+  background: linear-gradient(135deg, var(--cr-red-light) 0%, #8f5361 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.lexcr-btn-future {
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 48%, #8b5cf6 100%);
+  border: 1px solid rgba(164, 191, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(109, 149, 255, 0.2), 0 8px 20px rgba(74, 111, 174, 0.35);
+  color: #f8fbff;
+}
+
+.lexcr-btn-future:hover {
+  background: linear-gradient(135deg, #4a8ffb 0%, #7175f4 52%, #9b6af8 100%);
+  border-color: rgba(194, 214, 255, 0.62);
+}
+
+.lexcr-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--foreground);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.lexcr-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+@keyframes lexcr-pulse-ring {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(143, 74, 90, 0.28);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(143, 74, 90, 0);
+  }
+}
+
+.lexcr-pulse {
+  animation: lexcr-pulse-ring 2.5s ease-in-out infinite;
+}
+
+.lexcr-caret {
+  display: inline-block;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: var(--cr-blue);
+  animation: lexcr-blink 1s step-end infinite;
+}
+
+@keyframes lexcr-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.lexcr-step-icon {
+  animation: lexcr-step-float 4s ease-in-out infinite;
+}
+
+@keyframes lexcr-step-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.lexcr-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+.lexcr-marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: lexcr-marquee 40s linear infinite;
+}
+
+@keyframes lexcr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.lexcr-quote {
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.lexcr-quote:hover {
+  border-color: rgba(120, 160, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.lexcr-area-card {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--area-color) 52%, transparent);
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--area-color) 16%, transparent) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 100%),
+    rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lexcr-area-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--area-color) 15%, transparent),
+    color-mix(in srgb, var(--area-color) 90%, white 10%),
+    color-mix(in srgb, var(--area-color) 18%, transparent)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.lexcr-area-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--area-color) 72%, transparent);
+  box-shadow:
+    0 14px 36px rgba(0, 0, 0, 0.42),
+    0 0 30px color-mix(in srgb, var(--area-color) 38%, transparent);
+}
+
+.lexcr-area-card:hover::before {
+  opacity: 1;
+  animation: lexcr-area-glow 2.4s linear infinite;
+}
+
+.lexcr-area-icon {
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in srgb, var(--area-color) 65%, transparent);
+  background: color-mix(in srgb, var(--area-color) 28%, rgba(8, 14, 30, 0.9));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--area-color) 20%, transparent),
+    0 0 22px color-mix(in srgb, var(--area-color) 30%, transparent);
+}
+
+@keyframes lexcr-area-glow {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(16deg);
+  }
+}
+
+.lexcr-future-card {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--card-color) 48%, transparent);
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--card-color) 18%, transparent) 0%, rgba(255, 255, 255, 0.02) 48%, transparent 100%),
+    rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lexcr-future-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-color) 18%, transparent);
+}
+
+.lexcr-future-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--card-color) 70%, transparent);
+  box-shadow:
+    0 14px 34px rgba(0, 0, 0, 0.4),
+    0 0 28px color-mix(in srgb, var(--card-color) 30%, transparent);
+}
+
+.lexcr-future-icon {
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--card-color) 55%, transparent);
+  background: color-mix(in srgb, var(--card-color) 30%, rgba(8, 14, 30, 0.92));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--card-color) 20%, transparent),
+    0 0 20px color-mix(in srgb, var(--card-color) 28%, transparent);
+}
+
+.lexcr-chat-pattern {
+  background-color: var(--background);
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-size: 28px 28px;
+}
+
+.lexcr-typing-dot {
+  animation: lexcr-typing-bounce 1.2s ease-in-out infinite;
+}
+
+.lexcr-typing-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.lexcr-typing-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.lexcr-mobile-tap {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+@keyframes lexcr-typing-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  .lexcr-pulse,
+  .lexcr-step-icon,
+  .lexcr-marquee-track,
+  .lexcr-animate-in,
+  .lexcr-typing-dot {
+    animation: none !important;
+  }
+
+  .lexcr-caret {
+    display: none;
+  }
+}
+
+@media (max-width: 639px) {
+  .lexcr-mobile-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .lexcr-mobile-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  .lexcr-mobile-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

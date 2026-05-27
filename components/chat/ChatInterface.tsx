@@ -19,7 +19,7 @@ const SUGERENCIAS = [
 ];
 
 const LIMITE_GRATIS = 3;
-const KEY_CONSULTAS = "lexcr-consultas-libres";
+const KEY_CONSULTAS = "crlexai-consultas-libres";
 
 type ModalActivo = "buscar" | "subir" | "limite" | "abogado" | "plan_limit" | null;
 
@@ -52,7 +52,7 @@ export default function ChatInterface() {
 
   useEffect(() => {
     try {
-      const stored = localStorage.getItem("lexcr-historial");
+      const stored = localStorage.getItem("crlexai-historial");
       if (stored) setHistorial(JSON.parse(stored));
     } catch { /* ignore */ }
   }, []);
@@ -70,10 +70,10 @@ export default function ChatInterface() {
         fechaCreacion: mensajes[0].timestamp,
         preview: mensajes[0].content.slice(0, 100),
       };
-      const stored = localStorage.getItem("lexcr-historial");
+      const stored = localStorage.getItem("crlexai-historial");
       const existente: Conversacion[] = stored ? JSON.parse(stored) : [];
       const actualizado = [conv, ...existente.filter((c) => c.id !== convIdRef.current)].slice(0, 20);
-      localStorage.setItem("lexcr-historial", JSON.stringify(actualizado));
+      localStorage.setItem("crlexai-historial", JSON.stringify(actualizado));
       setHistorial(actualizado);
     } catch { /* ignore */ }
   }, [mensajes]);
@@ -178,17 +178,17 @@ export default function ChatInterface() {
   const consultasRestantes = LIMITE_GRATIS - consultasLibres;
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-[100dvh] min-h-[100svh] lexcr-chat-pattern">
       {/* Header */}
-      <header className="lexcr-glass text-white px-4 py-3 flex items-center gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.55)] flex-shrink-0">
-        <a href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <header className="lexcr-glass text-white px-4 sm:px-4 py-3 flex items-center gap-2 sm:gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.55)] flex-shrink-0">
+        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
           <div className="flex flex-col gap-[3px]">
             <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
             <span className="block w-4 h-0.5 rounded-sm bg-cr-red lexcr-glow-red" />
             <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
           </div>
-          <span className="text-lg font-bold">Lex<span className="text-cr-red">CR</span></span>
-        </a>
+          <span className="text-lg font-bold">Specter<span className="text-cr-red">laws</span></span>
+        </Link>
         <div className="h-5 w-px bg-white/15 mx-1" />
         <span className="text-sm text-white/60 hidden sm:inline">Asistente Legal</span>
 
@@ -220,13 +220,13 @@ export default function ChatInterface() {
               <Link href="/login" className="text-xs text-blue-200 hover:text-white transition-colors hidden sm:inline">
                 Iniciar sesión
               </Link>
-              <Link href="/registro" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg border border-white/20 transition-colors">
+              <Link href="/registro" className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg border border-white/20 transition-colors lexcr-mobile-tap">
                 Registrarse
               </Link>
             </>
           )}
 
-          <button onClick={nuevaConversacion} className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg border border-white/20 transition-colors">
+          <button onClick={nuevaConversacion} className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg border border-white/20 transition-colors lexcr-mobile-tap">
             + Nueva
           </button>
         </div>
@@ -243,114 +243,191 @@ export default function ChatInterface() {
       {/* Body */}
       <div className="flex flex-1 overflow-hidden relative">
         <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-4 py-6 space-y-4">
-            {mensajes.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full text-center px-4">
-                <div className="text-6xl mb-4">⚖️</div>
-                <h2 className="text-xl font-serif font-semibold text-white mb-2">
-                  {autenticado ? `Hola, ${session.user.name?.split(" ")[0]}. ¿En qué te ayudo?` : "¿En qué te puedo ayudar?"}
-                </h2>
-                <p className="text-white/60 max-w-sm text-sm mb-8">
-                  Soy LexCR, tu asistente legal especializado en las leyes de Costa Rica.
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl">
-                  {SUGERENCIAS.map((s) => (
-                    <button key={s} onClick={() => enviarMensaje(s)}
-                      className="text-left text-sm rounded-xl px-4 py-3 transition-colors text-white/85 lexcr-card border border-white/10 hover:border-cr-blue/45">
-                      {s}
+          {/* Mensajes (arriba cuando hay conversación) */}
+          {mensajes.length > 0 && (
+            <div className="flex-1 overflow-y-auto px-4 sm:px-4 py-4 min-h-0">
+              <div className="max-w-2xl mx-auto space-y-4">
+                {mensajes.map((msg) => (
+                  <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                    {msg.role === "assistant" && (
+                      <div className="w-8 h-8 rounded-full bg-cr-blue/80 border border-white/10 flex items-center justify-center text-white text-sm font-bold mr-2 mt-1 flex-shrink-0">
+                        ⚖
+                      </div>
+                    )}
+                    <div
+                      className={`max-w-[88%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-base sm:text-sm leading-relaxed whitespace-pre-wrap break-words ${
+                        msg.role === "user"
+                          ? "bg-cr-blue text-white rounded-br-sm"
+                          : "lexcr-card text-white/85 rounded-bl-sm"
+                      }`}
+                    >
+                      {msg.content}
+                    </div>
+                  </div>
+                ))}
+
+                {mensajes[mensajes.length - 1]?.role === "assistant" && !cargando && (
+                  <div className="flex justify-start ml-10">
+                    <button
+                      onClick={() => setModalActivo("abogado")}
+                      className="text-xs text-white/80 border border-white/15 bg-white/5 hover:bg-white/10 rounded-full px-3 py-1.5 transition-colors flex items-center gap-1.5"
+                    >
+                      ⚖ Hablar con un abogado
+                    </button>
+                  </div>
+                )}
+
+                {cargando && (
+                  <div className="flex justify-start">
+                    <div className="w-8 h-8 rounded-full bg-cr-blue/80 border border-white/10 flex items-center justify-center text-white text-sm font-bold mr-2 flex-shrink-0">
+                      ⚖
+                    </div>
+                    <div className="lexcr-card rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
+                      <span className="text-xs text-white/50">Specterlaws está escribiendo</span>
+                      <div className="flex gap-1 items-center">
+                        <span className="lexcr-typing-dot w-1.5 h-1.5 rounded-full bg-cr-blue" />
+                        <span className="lexcr-typing-dot w-1.5 h-1.5 rounded-full bg-cr-blue" />
+                        <span className="lexcr-typing-dot w-1.5 h-1.5 rounded-full bg-cr-blue" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div ref={chatEndRef} />
+              </div>
+            </div>
+          )}
+
+          {/* Centro: balanza + chat */}
+          <div
+            className={`flex flex-col items-center justify-center px-4 sm:px-4 py-4 sm:py-6 w-full ${
+              mensajes.length === 0 ? "flex-1" : "flex-shrink-0 border-t border-white/10"
+            }`}
+          >
+            <div className="w-full max-w-2xl flex flex-col items-center text-center">
+              <div
+                className={`flex items-center justify-center rounded-full bg-cr-blue/20 border border-cr-blue/30 mb-4 ${
+                  mensajes.length === 0 ? "w-20 h-20 text-5xl" : "w-12 h-12 text-2xl mb-3"
+                }`}
+                aria-hidden="true"
+              >
+                ⚖️
+              </div>
+
+              {mensajes.length === 0 && (
+                <>
+                  <h2 className="text-xl sm:text-2xl font-serif font-semibold text-white mb-2">
+                    {autenticado
+                      ? `Hola, ${session.user.name?.split(" ")[0]}. ¿En qué te ayudo?`
+                      : "¿En qué te puedo ayudar?"}
+                  </h2>
+                  <p className="text-white/60 max-w-md text-sm mb-6">
+                    Soy Specterlaws, tu asistente legal especializado en las leyes de Costa Rica.
+                  </p>
+                </>
+              )}
+
+              <div className="w-full lexcr-card rounded-2xl p-3 sm:p-4 border border-white/15 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
+                <div className="flex gap-2 mb-2">
+                  <textarea
+                    ref={textareaRef}
+                    value={inputTexto}
+                    onChange={(e) => setInputTexto(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        enviarMensaje();
+                      }
+                    }}
+                    placeholder="Describe tu situación legal... (Enter para enviar)"
+                    className="flex-1 resize-none rounded-xl px-4 py-3 text-base sm:text-sm bg-white/5 border border-white/15 text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-transparent max-h-36 min-h-[56px]"
+                    rows={2}
+                  />
+                  <button
+                    onClick={() => enviarMensaje()}
+                    disabled={!inputTexto.trim() || cargando}
+                    className="lexcr-mobile-tap bg-cr-red hover:bg-cr-red-light disabled:bg-white/10 text-white rounded-xl px-4 py-3 transition-colors self-end flex-shrink-0"
+                    aria-label="Enviar"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                <ToolBar
+                  onBuscarLeyes={() => {
+                    setModalActivo("buscar");
+                    setPanelActivo(null);
+                  }}
+                  onSubirArchivos={() => {
+                    setModalActivo("subir");
+                    setPanelActivo(null);
+                  }}
+                  onExpediente={() => setPanelActivo((p) => (p === "expediente" ? null : "expediente"))}
+                  onHistorial={() => setPanelActivo((p) => (p === "historial" ? null : "historial"))}
+                  onAbogado={() => setModalActivo("abogado")}
+                  archivosCount={archivos.length}
+                  historialCount={historial.length}
+                  panelActivo={panelActivo}
+                />
+              </div>
+
+              {mensajes.length === 0 && (
+                <div className="lexcr-mobile-scroll flex sm:grid sm:grid-cols-2 gap-3 w-full mt-6 overflow-x-auto sm:overflow-visible pb-1">
+                  {SUGERENCIAS.map((s, i) => (
+                    <button
+                      key={s}
+                      onClick={() => enviarMensaje(s)}
+                      className="lexcr-mobile-tap shrink-0 w-[84%] sm:w-auto text-left text-base sm:text-sm rounded-xl px-4 py-4 min-h-[56px] transition-all text-white/85 lexcr-card border border-white/10 hover:border-cr-blue/45 hover:bg-white/5 flex items-start gap-3"
+                    >
+                      <span className="text-xl shrink-0" aria-hidden="true">
+                        {["⚖️", "📋", "📖", "👨‍👩‍👧"][i]}
+                      </span>
+                      <span className="leading-snug">{s}</span>
                     </button>
                   ))}
                 </div>
-              </div>
-            )}
-
-            {mensajes.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                {msg.role === "assistant" && (
-                  <div className="w-8 h-8 rounded-full bg-cr-blue/80 border border-white/10 flex items-center justify-center text-white text-sm font-bold mr-2 mt-1 flex-shrink-0 lexcr-glow-blue">⚖</div>
-                )}
-                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words ${
-                  msg.role === "user" ? "bg-cr-blue text-white rounded-br-sm lexcr-glow-blue" : "lexcr-card text-white/85 rounded-bl-sm"
-                }`}>
-                  {msg.content}
-                </div>
-              </div>
-            ))}
-
-            {/* Abogado suggestion after last assistant message */}
-            {mensajes.length > 0 && mensajes[mensajes.length - 1]?.role === "assistant" && !cargando && (
-              <div className="flex justify-start ml-10">
-                <button
-                  onClick={() => setModalActivo("abogado")}
-                  className="text-xs text-white/80 border border-white/15 bg-white/5 hover:bg-white/10 rounded-full px-3 py-1.5 transition-colors flex items-center gap-1.5"
-                >
-                  ⚖ Hablar con un abogado
-                </button>
-              </div>
-            )}
-
-            {cargando && (
-              <div className="flex justify-start">
-                <div className="w-8 h-8 rounded-full bg-cr-blue/80 border border-white/10 flex items-center justify-center text-white text-sm font-bold mr-2 flex-shrink-0 lexcr-glow-blue">⚖</div>
-                <div className="lexcr-card rounded-2xl rounded-bl-sm px-4 py-3">
-                  <div className="flex gap-1 items-center h-4">
-                    {[0, 150, 300].map((delay) => (
-                      <span key={delay} className="w-2 h-2 bg-cr-blue rounded-full animate-bounce" style={{ animationDelay: `${delay}ms` }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={chatEndRef} />
-          </div>
-
-          {/* Input + Toolbar */}
-          <div className="lexcr-glass border-t border-white/10 px-4 pt-3 pb-3 flex-shrink-0">
-            <div className="flex gap-2 mb-1">
-              <textarea
-                ref={textareaRef}
-                value={inputTexto}
-                onChange={(e) => setInputTexto(e.target.value)}
-                onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); } }}
-                placeholder="Describe tu situación legal... (Enter para enviar)"
-                className="flex-1 resize-none rounded-xl px-4 py-3 text-sm bg-white/5 border border-white/15 text-white placeholder:text-white/35 focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:border-transparent max-h-32 min-h-[48px]"
-                rows={2}
-              />
-              <button
-                onClick={() => enviarMensaje()}
-                disabled={!inputTexto.trim() || cargando}
-                className="bg-cr-red hover:bg-cr-red-light disabled:bg-white/10 text-white rounded-xl px-4 py-3 transition-colors self-end flex-shrink-0 lexcr-glow-red"
-                aria-label="Enviar"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-              </button>
+              )}
             </div>
-
-            <ToolBar
-              onBuscarLeyes={() => { setModalActivo("buscar"); setPanelActivo(null); }}
-              onSubirArchivos={() => { setModalActivo("subir"); setPanelActivo(null); }}
-              onExpediente={() => setPanelActivo((p) => p === "expediente" ? null : "expediente")}
-              onHistorial={() => setPanelActivo((p) => p === "historial" ? null : "historial")}
-              onAbogado={() => setModalActivo("abogado")}
-              archivosCount={archivos.length}
-              historialCount={historial.length}
-              panelActivo={panelActivo}
-            />
           </div>
+
+          {mensajes.length === 0 && <div ref={chatEndRef} className="sr-only" />}
         </div>
 
         {panelActivo === "expediente" && (
-          <ExpedientePanel
-            archivos={archivos}
-            onAgregarAlChat={(a) => { enviarMensaje(`Adjunté el archivo "${a.nombre}" para que lo analices.`); setPanelActivo(null); }}
-            onCerrar={() => setPanelActivo(null)}
-          />
+          <>
+            <button
+              type="button"
+              className="md:hidden fixed inset-0 z-30 bg-black/50"
+              aria-label="Cerrar expediente"
+              onClick={() => setPanelActivo(null)}
+            />
+            <div className="fixed md:relative inset-y-0 right-0 z-40 md:z-auto w-full max-w-sm md:max-w-none md:w-72 lg:w-80">
+              <ExpedientePanel
+                archivos={archivos}
+                onAgregarAlChat={(a) => { enviarMensaje(`Adjunté el archivo "${a.nombre}" para que lo analices.`); setPanelActivo(null); }}
+                onCerrar={() => setPanelActivo(null)}
+              />
+            </div>
+          </>
         )}
         {panelActivo === "historial" && (
-          <HistorialPanel historial={historial} onCargar={cargarConversacion} onCerrar={() => setPanelActivo(null)} />
+          <>
+            <button
+              type="button"
+              className="md:hidden fixed inset-0 z-30 bg-black/50"
+              aria-label="Cerrar historial"
+              onClick={() => setPanelActivo(null)}
+            />
+            <div className="fixed md:relative inset-y-0 right-0 z-40 md:z-auto w-full max-w-sm md:max-w-none md:w-72 lg:w-80">
+              <HistorialPanel historial={historial} onCargar={cargarConversacion} onCerrar={() => setPanelActivo(null)} />
+            </div>
+          </>
         )}
       </div>
 

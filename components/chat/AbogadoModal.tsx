@@ -127,7 +127,7 @@ export default function AbogadoModal({ onCerrar }: Props) {
 
             <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-800">
               <strong>Nota:</strong> Este servicio conecta con abogados aliados independientes.
-              LexCR actúa como intermediario y puede recibir una comisión por la referencia.
+              Specterlaws actúa como intermediario y puede recibir una comisión por la referencia.
             </div>
 
             <button

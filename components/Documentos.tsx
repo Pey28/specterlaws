@@ -1,67 +1,61 @@
+import type { CSSProperties } from "react";
+
 const documentos = [
   {
     icono: "📄",
     titulo: "Carta de Renuncia",
     descripcion: "Renuncia laboral con preaviso según el Código de Trabajo.",
     categoria: "Laboral",
-    color: "border-cr-blue/30",
-    tag: "bg-cr-blue/15 text-cr-blue border border-cr-blue/25",
+    areaColor: "#3B82F6",
   },
   {
     icono: "🏠",
     titulo: "Contrato de Arrendamiento",
     descripcion: "Contrato de alquiler de vivienda o local comercial conforme a la Ley 7527.",
     categoria: "Civil",
-    color: "border-cr-red/30",
-    tag: "bg-cr-red/15 text-cr-red border border-cr-red/25",
+    areaColor: "#8B5CF6",
   },
   {
     icono: "📬",
     titulo: "Denuncia ante el MTSS",
     descripcion: "Denuncia por incumplimiento laboral ante el Ministerio de Trabajo.",
     categoria: "Laboral",
-    color: "border-cr-blue/30",
-    tag: "bg-cr-blue/15 text-cr-blue border border-cr-blue/25",
+    areaColor: "#3B82F6",
   },
   {
     icono: "🛒",
     titulo: "Queja ante el MEIC",
     descripcion: "Queja formal por producto defectuoso, garantía no respetada o publicidad engañosa.",
     categoria: "Consumidor",
-    color: "border-cr-red/30",
-    tag: "bg-cr-red/15 text-cr-red border border-cr-red/25",
+    areaColor: "#10B981",
   },
   {
     icono: "🤝",
     titulo: "Contrato de Compraventa",
     descripcion: "Compraventa de bienes muebles entre particulares con validez legal.",
     categoria: "Civil",
-    color: "border-cr-blue/30",
-    tag: "bg-cr-blue/15 text-cr-blue border border-cr-blue/25",
+    areaColor: "#8B5CF6",
   },
   {
     icono: "✉️",
     titulo: "Carta de Cobro Formal",
     descripcion: "Carta formal de cobro de deuda o incumplimiento de contrato.",
     categoria: "Civil",
-    color: "border-cr-red/30",
-    tag: "bg-cr-red/15 text-cr-red border border-cr-red/25",
+    areaColor: "#8B5CF6",
   },
   {
     icono: "🚨",
     titulo: "Denuncia por Acoso Laboral",
     descripcion: "Denuncia ante la Inspección de Trabajo por hostigamiento o acoso en el trabajo.",
     categoria: "Laboral",
-    color: "border-cr-blue/30",
-    tag: "bg-cr-blue/15 text-cr-blue border border-cr-blue/25",
+    areaColor: "#3B82F6",
   },
   {
     icono: "💰",
     titulo: "Solicitud de Liquidación",
     descripcion: "Solicitud formal de pago de prestaciones laborales al empleador.",
     categoria: "Laboral",
-    color: "border-cr-red/30",
-    tag: "bg-cr-red/15 text-cr-red border border-cr-red/25",
+    areaColor: "#3B82F6",
   },
 ];
 
@@ -85,7 +79,7 @@ export default function Documentos() {
         <div className="flex items-start gap-3 rounded-xl px-5 py-4 max-w-3xl mx-auto mb-12 lexcr-glass border border-amber-500/20">
           <span className="text-amber-300 text-xl mt-0.5">⚠️</span>
           <p className="text-amber-100/90 text-sm leading-relaxed">
-            <strong>Importante:</strong> Los documentos generados por LexCR son válidos para trámites personales, laborales y del consumidor que <strong>no requieren autenticación notarial ni firma de abogado</strong>. Para documentos que exigen firma ante notario (escrituras, poderes notariales, etc.) deberás consultar un profesional.
+            <strong>Importante:</strong> Los documentos generados por Specterlaws son válidos para trámites personales, laborales y del consumidor que <strong>no requieren autenticación notarial ni firma de abogado</strong>. Para documentos que exigen firma ante notario (escrituras, poderes notariales, etc.) deberás consultar un profesional.
           </p>
         </div>
 
@@ -94,10 +88,11 @@ export default function Documentos() {
           {documentos.map((doc) => (
             <div
               key={doc.titulo}
-              className={`rounded-2xl border ${doc.color} p-6 transition-all group cursor-pointer lexcr-card`}
+              className="rounded-2xl p-6 transition-all group cursor-pointer lexcr-future-card"
+              style={{ "--card-color": doc.areaColor } as CSSProperties}
             >
-              <div className="text-4xl mb-4">{doc.icono}</div>
-              <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${doc.tag}`}>
+              <div className="text-4xl mb-4 lexcr-future-icon w-14 h-14 flex items-center justify-center">{doc.icono}</div>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full border text-white/80 bg-white/5 border-white/15">
                 {doc.categoria}
               </span>
               <h3 className="font-bold text-white text-base mt-3 mb-2">{doc.titulo}</h3>
@@ -118,7 +113,7 @@ export default function Documentos() {
             ¿No encuentras el documento que necesitas?
           </p>
           <p className="text-white/60 text-sm mb-5">
-            Descríbenos tu situación y LexCR genera el documento adecuado para tu caso.
+            Descríbenos tu situación y Specterlaws genera el documento adecuado para tu caso.
           </p>
           <a
             href="#consultar"

@@ -15,7 +15,7 @@ export default function CTA() {
             ¿Tienes una situación legal?
           </h2>
           <p className="text-white/70 text-lg mb-8 max-w-xl mx-auto leading-relaxed">
-            Describe tu caso y LexCR te explicará tus derechos según la ley costarricense, qué puedes hacer y a dónde acudir.
+            Describe tu caso y Specterlaws te explicará tus derechos según la ley costarricense, qué puedes hacer y a dónde acudir.
           </p>
 
           {/* Simulated chat input */}
@@ -24,7 +24,7 @@ export default function CTA() {
               <div className="flex-1 text-left">
                 <p className="text-xs text-white/50 mb-1 font-medium">Cuéntame tu situación...</p>
                 <p className="text-white/80 text-sm">
-                  "Mi jefe me despidió sin darme preaviso ni pagarme el aguinaldo..."
+                  &quot;Mi jefe me despidió sin darme preaviso ni pagarme el aguinaldo...&quot;
                 </p>
               </div>
               <button className="bg-cr-red hover:bg-cr-red-light text-white rounded-xl px-4 py-3 font-semibold text-sm transition-colors whitespace-nowrap lexcr-glow-red">
@@ -46,7 +46,7 @@ export default function CTA() {
 
         {/* Email capture */}
         <div className="mt-10 rounded-2xl p-8 lexcr-card border border-white/10">
-          <h3 className="text-xl font-bold text-white mb-2">Sé el primero en usar LexCR</h3>
+          <h3 className="text-xl font-bold text-white mb-2">Sé el primero en usar Specterlaws</h3>
           <p className="text-white/60 text-sm mb-5">Déjanos tu correo y te avisamos cuando el asistente esté listo.</p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
             <input

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     languages: { "es-CR": buildCanonical("/accidente-de-trabajo") },
   },
   openGraph: {
-    title: "Accidente de Trabajo en Costa Rica – LexCR",
+    title: "Accidente de Trabajo en Costa Rica – Specterlaws",
     description:
       "¿Sufriste un accidente en el trabajo? Conocé el proceso con el INS, tus derechos a incapacidad e indemnización según la Ley de Riesgos del Trabajo.",
     url: buildCanonical("/accidente-de-trabajo"),

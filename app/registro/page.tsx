@@ -5,8 +5,8 @@ import RegistroForm from "@/components/auth/RegistroForm";
 export const metadata: Metadata = {
   title: "Crear cuenta gratis",
   description:
-    "Registrate en LexCR y accedé a consultas legales ilimitadas con IA. Sin costo inicial, sin tarjeta de crédito.",
-  alternates: { canonical: "https://lexcr.cr/registro" },
+    "Registrate en Specterlaws y accedé a consultas legales ilimitadas con IA. Sin costo inicial, sin tarjeta de crédito.",
+  alternates: { canonical: "https://specterlaws.cr/registro" },
   robots: { index: false, follow: true },
 };
 
@@ -21,7 +21,7 @@ export default function RegistroPage() {
           <span className="block w-5 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
         </div>
         <span className="text-2xl font-bold text-white">
-          Lex<span className="text-cr-red">CR</span>
+          Specter<span className="text-cr-red">laws</span>
         </span>
       </Link>
 
@@ -56,7 +56,7 @@ export default function RegistroPage() {
       <p className="mt-6 text-xs text-white/40 text-center max-w-sm">
         Al registrarte aceptás los{" "}
         <span className="underline cursor-default">Términos de Servicio</span> y la{" "}
-        <span className="underline cursor-default">Política de Privacidad</span> de LexCR.
+        <span className="underline cursor-default">Política de Privacidad</span> de Specterlaws.
       </p>
     </div>
   );

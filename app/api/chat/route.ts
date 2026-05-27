@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
       : "";
     const ragSuffix = articulosRelevantes ? `\n\n${articulosRelevantes}` : "";
 
-    const systemPrompt = `Eres LexCR, un asistente legal especializado en leyes costarricenses vigentes en 2026. Fuente oficial: http://www.pgrweb.go.cr/scij/
+    const systemPrompt = `Eres Specterlaws, un asistente legal especializado en leyes costarricenses vigentes en 2026. Fuente oficial: http://www.pgrweb.go.cr/scij/
 Responde en español, cita artículos exactos y explica los derechos del usuario de manera simple y clara.
 Indica siempre a qué institución acudir (MTSS, MEIC, OIJ, Defensoría, etc.).
 Si el caso requiere atención especializada, recomienda el SICAI o la Defensoría Pública.

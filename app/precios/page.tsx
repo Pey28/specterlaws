@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Planes y Precios",
   description:
     "Consultá tus derechos legales desde ₡500. Plan Básico ₡3,000/mes con consultas ilimitadas o Profesional ₡8,000/mes con redacción de documentos legales.",
-  alternates: { canonical: "https://lexcr.cr/precios" },
+  alternates: { canonical: "https://specterlaws.cr/precios" },
   openGraph: {
-    title: "Planes y Precios – LexCR",
+    title: "Planes y Precios – Specterlaws",
     description:
       "Desde ₡500 por consulta hasta planes ilimitados para empresas. Pagá con SINPE Móvil o tarjeta.",
-    url: "https://lexcr.cr/precios",
+    url: "https://specterlaws.cr/precios",
   },
 };
 
@@ -41,7 +41,7 @@ export default function PreciosPage() {
             <span className="block w-4 h-0.5 rounded-sm bg-cr-red lexcr-glow-red" />
             <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
           </div>
-          <span className="text-lg font-bold">Lex<span className="text-cr-red">CR</span></span>
+          <span className="text-lg font-bold">Specter<span className="text-cr-red">laws</span></span>
         </Link>
         <div className="h-5 w-px bg-white/15 mx-1" />
         <span className="text-sm text-white/60">Planes y Precios</span>
@@ -163,7 +163,7 @@ export default function PreciosPage() {
             </div>
             <div className="text-white/55 text-sm mb-5">por mes según organización</div>
             <a
-              href="mailto:ventas@lexcr.cr?subject=Consulta%20Plan%20Empresarial"
+              href="mailto:ventas@specterlaws.cr?subject=Consulta%20Plan%20Empresarial"
               className="block bg-white/92 text-[#0a0f1e] font-bold px-8 py-3 rounded-xl hover:bg-white transition-colors"
             >
               Contactar ventas

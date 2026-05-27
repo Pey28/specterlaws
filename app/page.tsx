@@ -1,11 +1,13 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AreasLegales from "@/components/AreasLegales";
-import Documentos from "@/components/Documentos";
-import ComoFunciona from "@/components/ComoFunciona";
-import Confianza from "@/components/Confianza";
-import CTA from "@/components/CTA";
-import Footer from "@/components/Footer";
+import dynamic from "next/dynamic";
+
+const Documentos = dynamic(() => import("@/components/Documentos"));
+const ComoFunciona = dynamic(() => import("@/components/ComoFunciona"));
+const Confianza = dynamic(() => import("@/components/Confianza"));
+const CTA = dynamic(() => import("@/components/CTA"));
+const Footer = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (

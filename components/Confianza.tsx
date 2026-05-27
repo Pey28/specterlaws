@@ -38,7 +38,7 @@ export default function Confianza() {
         <div className="text-center mb-16 lexcr-animate-in">
           <span className="text-cr-red font-semibold text-sm uppercase tracking-wider">Confianza</span>
           <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-4">
-            ¿Por qué usar LexCR?
+            ¿Por qué usar Specterlaws?
           </h2>
         </div>
 
@@ -58,16 +58,23 @@ export default function Confianza() {
             Te orientamos hacia las instituciones correctas
           </h3>
           <p className="text-white/60 text-sm mb-8">
-            LexCR te dice exactamente a qué entidad costarricense acudir según tu caso.
+            Specterlaws te dice exactamente a qué entidad costarricense acudir según tu caso.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {instituciones.map((inst) => (
-              <div key={inst.nombre} className="rounded-xl p-4 transition-colors lexcr-glass hover:bg-white/10">
-                <div className="text-3xl mb-2">{inst.icono}</div>
-                <div className="text-white font-bold text-sm">{inst.nombre}</div>
-                <div className="text-white/55 text-xs mt-1">{inst.desc}</div>
-              </div>
-            ))}
+          <div className="lexcr-marquee">
+            <div className="lexcr-marquee-track">
+              {[...instituciones, ...instituciones].map((inst, i) => (
+                <div
+                  key={`${inst.nombre}-${i}`}
+                  className="rounded-xl px-6 py-4 flex items-center gap-3 lexcr-glass shrink-0 min-w-[200px]"
+                >
+                  <span className="text-2xl">{inst.icono}</span>
+                  <div className="text-left">
+                    <div className="text-white font-bold text-sm">{inst.nombre}</div>
+                    <div className="text-white/55 text-xs mt-0.5">{inst.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

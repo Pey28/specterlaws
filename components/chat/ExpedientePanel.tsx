@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { Archivo } from "./types";
 
 type Props = {
@@ -28,7 +29,7 @@ export default function ExpedientePanel({
   onCerrar,
 }: Props) {
   return (
-    <div className="w-72 lg:w-80 lexcr-glass border-l border-white/10 flex flex-col shadow-xl">
+    <div className="w-full h-full lexcr-glass border-l border-white/10 flex flex-col shadow-xl">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5">
         <span className="text-lg">📁</span>
@@ -63,9 +64,12 @@ export default function ExpedientePanel({
             >
               <div className="flex items-start gap-2 mb-2">
                 {a.preview ? (
-                  <img
+                  <Image
                     src={a.preview}
                     alt={a.nombre}
+                    width={40}
+                    height={40}
+                    unoptimized
                     className="w-10 h-10 object-cover rounded-lg flex-shrink-0"
                   />
                 ) : (

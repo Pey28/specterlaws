@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     languages: { "es-CR": buildCanonical("/derechos-laborales") },
   },
   openGraph: {
-    title: "Derechos Laborales en Costa Rica – LexCR",
+    title: "Derechos Laborales en Costa Rica – Specterlaws",
     description:
       "Guía completa sobre tus derechos como trabajador: salario, vacaciones, aguinaldo, despido y más. Basado en el Código de Trabajo de Costa Rica.",
     url: buildCanonical("/derechos-laborales"),
@@ -81,7 +81,7 @@ export default function DerechosLaboralesPage() {
               El <strong className="text-white">Código de Trabajo de Costa Rica</strong> (Ley N.° 2) protege a todos los trabajadores del sector privado. Conocer tus derechos es el primer paso para defenderlos.
             </p>
             <p>
-              En LexCR podés consultar gratuitamente cualquier duda sobre tu relación laboral: contratos, salarios, jornadas, despidos, licencias, y más — con respuestas basadas en la legislación vigente.
+              En Specterlaws podés consultar gratuitamente cualquier duda sobre tu relación laboral: contratos, salarios, jornadas, despidos, licencias, y más — con respuestas basadas en la legislación vigente.
             </p>
           </>
         }

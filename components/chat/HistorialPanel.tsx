@@ -21,7 +21,7 @@ export default function HistorialPanel({
   onCerrar,
 }: Props) {
   return (
-    <div className="w-72 lg:w-80 lexcr-glass border-l border-white/10 flex flex-col shadow-xl">
+    <div className="w-full h-full lexcr-glass border-l border-white/10 flex flex-col shadow-xl">
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-white/10 bg-white/5">
         <span className="text-lg">🗄️</span>

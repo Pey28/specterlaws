@@ -5,8 +5,8 @@ import LoginForm from "@/components/auth/LoginForm";
 
 export const metadata: Metadata = {
   title: "Iniciar sesión",
-  description: "Accedé a tu cuenta de LexCR para ver tu historial de consultas legales.",
-  alternates: { canonical: "https://lexcr.cr/login" },
+  description: "Accedé a tu cuenta de Specterlaws para ver tu historial de consultas legales.",
+  alternates: { canonical: "https://specterlaws.cr/login" },
   robots: { index: false, follow: true },
 };
 
@@ -21,7 +21,7 @@ export default function LoginPage() {
           <span className="block w-5 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
         </div>
         <span className="text-2xl font-bold text-white">
-          Lex<span className="text-cr-red">CR</span>
+          Specter<span className="text-cr-red">laws</span>
         </span>
       </Link>
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
       <p className="mt-6 text-xs text-white/40 text-center max-w-sm">
         Al iniciar sesión aceptás los{" "}
         <span className="underline cursor-default">Términos de Servicio</span> y la{" "}
-        <span className="underline cursor-default">Política de Privacidad</span> de LexCR.
+        <span className="underline cursor-default">Política de Privacidad</span> de Specterlaws.
       </p>
     </div>
   );

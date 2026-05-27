@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Olvidé mi contraseña – LexCR",
+  title: "Olvidé mi contraseña – Specterlaws",
 };
 
 export default function OlvideContrasenaPage() {
@@ -15,7 +15,7 @@ export default function OlvideContrasenaPage() {
           <span className="block w-5 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
         </div>
         <span className="text-2xl font-bold text-[#1A3A6B]">
-          Lex<span className="text-[#C0392B]">CR</span>
+          Specter<span className="text-[#C0392B]">laws</span>
         </span>
       </Link>
 

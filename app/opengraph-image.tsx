@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "LexCR – Asistente Legal con IA para Costa Rica";
+export const alt = "Specterlaws – Asistente Legal con IA para Costa Rica";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -74,8 +74,8 @@ export default function OgImage() {
             gap: 0,
           }}
         >
-          <span>Lex</span>
-          <span style={{ color: "#ff4d6d" }}>CR</span>
+          <span>Specter</span>
+          <span style={{ color: "#ff4d6d" }}>laws</span>
         </div>
 
         {/* Tagline */}
@@ -127,7 +127,7 @@ export default function OgImage() {
             letterSpacing: "0.05em",
           }}
         >
-          lexcr.cr
+          specterlaws.cr
         </div>
       </div>
     ),

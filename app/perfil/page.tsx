@@ -7,7 +7,7 @@ import { PLANES, formatearPrecio, tieneConsultasIlimitadas } from "@/lib/planes"
 import type { PlanId } from "@/lib/planes";
 import CerrarSesionBtn from "@/components/auth/CerrarSesionBtn";
 
-export const metadata: Metadata = { title: "Mi Perfil – LexCR" };
+export const metadata: Metadata = { title: "Mi Perfil – Specterlaws" };
 
 const PLAN_COLORS: Record<PlanId, string> = {
   gratis: "bg-gray-100 text-gray-600",
@@ -37,7 +37,7 @@ export default async function PerfilPage() {
             <span className="block w-4 h-0.5 rounded-sm bg-[#C0392B]" />
             <span className="block w-4 h-0.5 rounded-sm bg-white/60" />
           </div>
-          <span className="text-lg font-bold">Lex<span className="text-[#e74c3c]">CR</span></span>
+          <span className="text-lg font-bold">Specter<span className="text-[#e74c3c]">laws</span></span>
         </Link>
         <div className="h-5 w-px bg-white/20 mx-1" />
         <span className="text-sm text-blue-200">Mi Perfil</span>

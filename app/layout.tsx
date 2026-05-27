@@ -54,15 +54,15 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} – Tu Defensa Legal en Costa Rica`,
     description: DEFAULT_DESCRIPTION,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "LexCR – Asistente Legal IA Costa Rica" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Specterlaws – Asistente Legal IA Costa Rica" }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE_NAME} – Tu Defensa Legal en Costa Rica`,
     description: DEFAULT_DESCRIPTION,
     images: ["/opengraph-image"],
-    creator: "@lexcr_cr",
-    site: "@lexcr_cr",
+    creator: "@specterlaws",
+    site: "@specterlaws",
   },
   verification: {
     google: process.env.GOOGLE_SITE_VERIFICATION ?? "PENDIENTE",

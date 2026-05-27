@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           currency: "usd",
           unit_amount: Math.round((monto / 540) * 100), // cents
           product_data: {
-            name: `LexCR – Plan ${PLANES[planId].nombre}`,
+            name: `Specterlaws – Plan ${PLANES[planId].nombre}`,
             description: PLANES[planId].descripcion,
           },
         },

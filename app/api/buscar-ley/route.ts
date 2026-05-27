@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     const message = await client.messages.create({
       model: "claude-sonnet-4-20250514",
       max_tokens: 1000,
-      system: `Eres LexCR, un asistente legal especializado en leyes costarricenses vigentes en 2026. Fuente oficial: http://www.pgrweb.go.cr/scij/
+      system: `Eres Specterlaws, un asistente legal especializado en leyes costarricenses vigentes en 2026. Fuente oficial: http://www.pgrweb.go.cr/scij/
 Responde SOLO con base en la legislación costarricense vigente.
 Responde en español, cita el artículo exacto, confirma si está vigente y explica los derechos de manera simple y clara.
 Cuando se te proporcionen artículos de legislación, úsalos como base principal.${ragSuffix}`,

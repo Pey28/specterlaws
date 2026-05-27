@@ -1,7 +1,7 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lexcr.cr";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://specterlaws.cr";
 
-export const SITE_NAME = "LexCR";
+export const SITE_NAME = "Specterlaws";
 
 export const DEFAULT_DESCRIPTION =
   "Consulta legal gratuita con inteligencia artificial especializada en leyes de Costa Rica. Derechos laborales, despidos, pensiones alimentarias, accidentes de trabajo y más.";

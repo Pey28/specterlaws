@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, useRef } from "react";
 import type { Archivo } from "./types";
 
@@ -145,9 +146,12 @@ export default function SubirArchivosModal({ onCerrar, onArchivoSubido }: Props)
               {/* Preview */}
               <div className="border border-gray-200 rounded-xl p-4 mb-4">
                 {preview ? (
-                  <img
+                  <Image
                     src={preview}
                     alt="preview"
+                    width={800}
+                    height={520}
+                    unoptimized
                     className="w-full max-h-52 object-contain rounded-lg"
                   />
                 ) : (

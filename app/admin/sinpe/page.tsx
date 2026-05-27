@@ -37,7 +37,7 @@ export default async function AdminSinpePage({
   return (
     <div className="min-h-screen bg-[#F0F4F8]">
       <header className="bg-[#1A3A6B] text-white px-4 py-3 flex items-center gap-3 shadow-md">
-        <span className="text-lg font-bold">Lex<span className="text-[#e74c3c]">CR</span></span>
+        <span className="text-lg font-bold">Specter<span className="text-[#e74c3c]">laws</span></span>
         <div className="h-5 w-px bg-white/20 mx-1" />
         <span className="text-sm text-blue-200">Panel Admin — SINPE Pendientes</span>
         <div className="ml-auto text-xs text-blue-300">{pagos.length} pendiente{pagos.length !== 1 ? "s" : ""}</div>

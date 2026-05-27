@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     languages: { "es-CR": buildCanonical("/pension-alimentaria") },
   },
   openGraph: {
-    title: "Pensión Alimentaria en Costa Rica – LexCR",
+    title: "Pensión Alimentaria en Costa Rica – Specterlaws",
     description:
       "Guía completa sobre pensión alimentaria: quién debe pagarla, cómo se calcula, dónde demandar y qué ocurre si el obligado no paga.",
     url: buildCanonical("/pension-alimentaria"),
@@ -81,7 +81,7 @@ export default function PensionAlimentariaPage() {
               La <strong className="text-white">Ley de Pensiones Alimentarias N.° 7654</strong> de Costa Rica establece que toda persona que dependa económicamente de otra tiene derecho a recibir una contribución para su sustento, habitación, vestido, educación y salud.
             </p>
             <p>
-              El proceso puede iniciarse sin abogado, aunque para casos complejos o en disputas sobre el monto se recomienda asesoría legal. LexCR puede orientarte sobre los pasos concretos para tu situación.
+              El proceso puede iniciarse sin abogado, aunque para casos complejos o en disputas sobre el monto se recomienda asesoría legal. Specterlaws puede orientarte sobre los pasos concretos para tu situación.
             </p>
           </>
         }

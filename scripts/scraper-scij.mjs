@@ -114,10 +114,6 @@ async function descargarLey(page, ley) {
 async function main() {
   if (!fs.existsSync(LEYES_DIR)) fs.mkdirSync(LEYES_DIR, { recursive: true });
 
-  // Restaurar los archivos de leyes manuales si fueron sobreescritos
-  const MANUALES = ["codigo-trabajo", "constitucion-politica", "codigo-penal",
-                    "ley-7472-consumidor", "codigo-civil"];
-
   console.log("🚀 Iniciando scraper SCIJ (versión corregida)\n");
 
   const browser = await chromium.launch({ headless: true });

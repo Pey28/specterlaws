@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     languages: { "es-CR": buildCanonical("/despido-injustificado") },
   },
   openGraph: {
-    title: "Despido Injustificado en Costa Rica – LexCR",
+    title: "Despido Injustificado en Costa Rica – Specterlaws",
     description:
       "¿Te despidieron sin justificación? Conocé tus derechos a preaviso, cesantía y vacaciones proporcionales según el Código de Trabajo costarricense.",
     url: buildCanonical("/despido-injustificado"),

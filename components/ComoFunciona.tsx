@@ -1,21 +1,26 @@
+import type { CSSProperties } from "react";
+
 const pasos = [
   {
     numero: "01",
     titulo: "Describe tu situación",
     descripcion: "Escribe en español, con tus propias palabras. No necesitas saber términos legales — solo cuéntanos qué pasó.",
     icono: "💬",
+    color: "#3B82F6",
   },
   {
     numero: "02",
     titulo: "Recibe análisis legal",
-    descripcion: "LexCR analiza tu caso con base en el Código de Trabajo, Código Civil, Código Penal y la Ley 7472 vigentes en Costa Rica.",
+    descripcion: "Specterlaws analiza tu caso con base en el Código de Trabajo, Código Civil, Código Penal y la Ley 7472 vigentes en Costa Rica.",
     icono: "🔍",
+    color: "#8B5CF6",
   },
   {
     numero: "03",
     titulo: "Conoce tus opciones",
     descripcion: "Obtienes una explicación clara de tus derechos, las instituciones a las que puedes acudir (MTSS, MEIC, OIJ, Defensoría) y los pasos a seguir.",
     icono: "📋",
+    color: "#10B981",
   },
 ];
 
@@ -27,7 +32,7 @@ export default function ComoFunciona() {
         <div className="text-center mb-16 lexcr-animate-in">
           <span className="text-cr-red font-semibold text-sm uppercase tracking-wider">Simple y rápido</span>
           <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-4">
-            ¿Cómo funciona LexCR?
+            ¿Cómo funciona Specterlaws?
           </h2>
           <p className="text-white/65 max-w-xl mx-auto text-lg">
             Sin citas, sin formularios, sin esperas. Asesoría legal disponible las 24 horas.
@@ -39,15 +44,17 @@ export default function ComoFunciona() {
           {/* Connector line (desktop) */}
           <div className="hidden md:block absolute top-14 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-cr-blue via-cr-red to-cr-blue opacity-30" />
 
-          {pasos.map((paso, i) => (
-            <div key={paso.numero} className="relative flex flex-col items-center text-center">
+          {pasos.map((paso) => (
+            <div
+              key={paso.numero}
+              className="relative flex flex-col items-center text-center rounded-2xl p-6 sm:p-8 lexcr-future-card"
+              style={{ "--card-color": paso.color } as CSSProperties}
+            >
               {/* Step number */}
-              <div className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl mb-5 shadow-lg border border-white/10 ${
-                i === 1 ? "bg-cr-red lexcr-glow-red" : "bg-cr-blue lexcr-glow-blue"
-              }`}>
+              <div className="lexcr-step-icon lexcr-future-icon w-16 h-16 flex items-center justify-center text-2xl mb-5">
                 <span>{paso.icono}</span>
               </div>
-              <span className={`text-xs font-bold tracking-widest mb-2 ${i === 1 ? "text-cr-red" : "text-cr-blue"}`}>
+              <span className="text-xs font-bold tracking-widest mb-2 text-white/70">
                 PASO {paso.numero}
               </span>
               <h3 className="text-xl font-bold text-white mb-3">{paso.titulo}</h3>
@@ -58,7 +65,7 @@ export default function ComoFunciona() {
 
         {/* Disclaimer */}
         <p className="text-center text-xs text-white/45 mt-14 max-w-2xl mx-auto">
-          LexCR brinda información legal orientativa basada en la legislación costarricense vigente. No reemplaza la consulta con un abogado colegiado para casos complejos.
+          Specterlaws brinda información legal orientativa basada en la legislación costarricense vigente. No reemplaza la consulta con un abogado colegiado para casos complejos.
         </p>
       </div>
     </section>

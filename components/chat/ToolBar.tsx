@@ -48,23 +48,23 @@ export default function ToolBar({
   };
 
   return (
-    <div className="flex items-center gap-1 py-1 border-t border-gray-100 mt-1">
+    <div className="lexcr-mobile-scroll flex items-center gap-2 py-2 mt-1 overflow-x-auto sm:flex-wrap">
       {botones.map((b) => (
         <button
           key={b.key}
           onClick={handlers[b.key]}
-          className={`relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+          className={`relative lexcr-mobile-tap flex items-center gap-2 px-3.5 py-3 sm:py-2.5 rounded-xl text-sm sm:text-xs font-medium transition-all shrink-0 ${
             activos[b.key]
-              ? "bg-[#1A3A6B] text-white"
+              ? "bg-cr-blue text-white border border-cr-blue/50"
               : b.key === "abogado"
-              ? "text-[#1A3A6B] hover:bg-blue-50 border border-[#1A3A6B]/20"
-              : "text-gray-500 hover:bg-gray-100 hover:text-[#1A3A6B]"
+              ? "text-white/80 border border-cr-red/30 bg-cr-red/10 hover:bg-cr-red/20"
+              : "text-white/60 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white"
           }`}
         >
-          <span>{b.icono}</span>
-          <span className="hidden sm:inline">{b.label}</span>
+          <span className="text-base">{b.icono}</span>
+          <span>{b.label}</span>
           {badges[b.key] > 0 && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#C0392B] text-white text-[10px] flex items-center justify-center font-bold leading-none">
+            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-cr-red text-white text-[10px] flex items-center justify-center font-bold leading-none">
               {badges[b.key] > 9 ? "9+" : badges[b.key]}
             </span>
           )}

@@ -18,7 +18,7 @@ export const PLANES: Record<PlanId, Plan> = {
   gratis: {
     id: "gratis",
     nombre: "Gratis",
-    descripcion: "Para conocer LexCR sin compromiso.",
+    descripcion: "Para conocer Specterlaws sin compromiso.",
     precio: 0,
     periodo: "gratis",
     consultasMes: 3,

@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     languages: { "es-CR": buildCanonical("/denuncia-mtss") },
   },
   openGraph: {
-    title: "Denuncia en el MTSS Costa Rica – LexCR",
+    title: "Denuncia en el MTSS Costa Rica – Specterlaws",
     description:
       "¿Tu patrono incumple la ley? Conocé cómo presentar una denuncia ante el MTSS: salarios no pagados, jornadas ilegales, hostigamiento sexual y condiciones insalubres.",
     url: buildCanonical("/denuncia-mtss"),
