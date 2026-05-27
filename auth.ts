@@ -1,12 +1,17 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
-import { getUserByEmail, getUserPlan } from "@/lib/db";
+import { getUserByEmail, getUserPlan, createUser } from "@/lib/db";
 import { authConfig } from "./auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
   providers: [
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     Credentials({
       credentials: {
         email: { label: "Correo", type: "email" },
@@ -36,4 +41,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
+  callbacks: {
+    ...authConfig.callbacks,
+    async signIn({ user, account }) {
+      if (account?.provider === "google" && user.email) {
+        let dbUser = getUserByEmail(user.email);
+        if (!dbUser) {
+          createUser({
+            nombre: user.name ?? user.email.split("@")[0],
+            email: user.email,
+            password: "",
+            provincia: "",
+          });
+          dbUser = getUserByEmail(user.email);
+        }
+        if (dbUser) {
+          user.id = dbUser.id;
+          (user as { plan?: string }).plan = getUserPlan(dbUser.id);
+          (user as { provincia?: string }).provincia = dbUser.provincia ?? "";
+        }
+      }
+      return true;
+    },
+  },
 });
