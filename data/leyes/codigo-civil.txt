@@ -1,0 +1,114 @@
+=== CÓDIGO CIVIL DE COSTA RICA ===
+Ley N° 63, del 28 de setiembre de 1887 y sus reformas
+Fuente: http://www.pgrweb.go.cr/scij/
+
+--- CONTRATOS ---
+
+ARTÍCULO 1007.-
+El contrato es el acuerdo de dos o más personas para constituir, regular o extinguir entre ellas una relación jurídica. Para su validez requiere:
+a) Capacidad de las partes;
+b) Consentimiento libre y sin vicios;
+c) Objeto lícito;
+d) Causa justa.
+
+ARTÍCULO 1015.-
+El consentimiento viciado por error, dolo, intimidación o lesión, da derecho a la anulación del contrato.
+
+ARTÍCULO 1022.-
+Los contratos tienen fuerza de ley entre las partes. No pueden quedar sin efecto por el mutuo disenso de las mismas partes o por las causas que la ley reconoce.
+
+ARTÍCULO 1045.-
+Todo aquel que por dolo, falta, negligencia o imprudencia cause a otro un daño, está obligado a repararlo junto con los perjuicios.
+
+--- ARRENDAMIENTO (Ley 7527 - Ley de Arrendamientos Urbanos) ---
+
+ARTÍCULO 1 (Ley 7527).-
+La presente ley regula las relaciones entre arrendadores y arrendatarios de bienes inmuebles destinados a uso habitacional o comercial.
+
+PLAZO MÍNIMO DEL CONTRATO:
+- Arrendamiento habitacional: mínimo tres años
+- Arrendamiento comercial: mínimo tres años
+
+DERECHOS DEL ARRENDATARIO:
+1. Habitar el bien en condiciones adecuadas;
+2. No ser desahuciado sin causa legal justificada;
+3. Recibir recibo de pago;
+4. Que no se le aumenten las rentas fuera de lo permitido por ley.
+
+DERECHOS DEL ARRENDADOR:
+1. Recibir el pago puntual de la renta;
+2. Que el bien sea utilizado para el fin acordado;
+3. Recuperar el bien al vencimiento del plazo.
+
+CAUSAS DE DESAHUCIO:
+1. Falta de pago de dos o más meses de renta;
+2. Uso del bien para fines distintos a los pactados;
+3. Subarrendar sin autorización del propietario;
+4. Deterioro grave del inmueble por negligencia del arrendatario.
+
+PROCEDIMIENTO DE DESAHUCIO:
+El desahucio debe tramitarse ante el juzgado competente. No se puede sacar al inquilino por la fuerza sin orden judicial.
+
+--- PENSIÓN ALIMENTARIA ---
+
+ARTÍCULO 169 del Código de Familia.-
+Están obligados recíprocamente a darse alimentos, en el orden que se señala:
+1. Los cónyuges entre sí;
+2. Los padres a sus hijos menores o discapacitados;
+3. Los hijos a sus padres;
+4. Los hermanos mayores a los menores.
+
+ARTÍCULO 170.-
+La obligación de dar alimentos comprende: alimentación, vestido, vivienda, atención médica, educación y todo lo necesario para el desarrollo integral del menor.
+
+CÓMO SOLICITAR PENSIÓN ALIMENTARIA:
+1. Presentarse al Juzgado de Pensiones Alimentarias más cercano
+2. No se requiere abogado para la primera gestión
+3. El incumplimiento puede resultar en apremio corporal (arresto)
+
+--- SUCESIONES (HERENCIAS) ---
+
+ARTÍCULO 521.-
+La sucesión de una persona se abre desde el momento de su muerte. Los herederos adquieren por ese solo hecho el dominio sobre los bienes del causante.
+
+HEREDEROS FORZOSOS:
+Son herederos forzosos y tienen derecho a la legítima:
+- Los hijos del difunto (50% del patrimonio)
+- El cónyuge sobreviviente
+- Los padres del difunto (en ausencia de hijos)
+
+ARTÍCULO 596.-
+Si el difunto no dejó testamento, la herencia se distribuye por partes iguales entre:
+1. Primero: los hijos
+2. Segundo: los padres (si no hay hijos)
+3. Tercero: los hermanos (si no hay hijos ni padres)
+4. Cuarto: el cónyuge (concurre con los hijos)
+
+PARA TRAMITAR UNA HERENCIA:
+1. Presentar solicitud ante Notario Público o Juzgado Civil
+2. Presentar certificado de defunción
+3. Demostrar parentesco o calidad de heredero
+
+--- DAÑOS Y RESPONSABILIDAD CIVIL ---
+
+ARTÍCULO 1048.-
+El que cause daño a otro por culpa, negligencia o imprudencia, está obligado a repararlo. La responsabilidad civil es independiente de la responsabilidad penal.
+
+ARTÍCULO 1045.-
+Todo acto u omisión que cause daño a otro da lugar a la obligación de reparar el daño, incluyendo:
+- Daño material (pérdida económica)
+- Daño moral (sufrimiento, angustia)
+- Lucro cesante (ganancias dejadas de percibir)
+
+--- PRESCRIPCIÓN ---
+
+ARTÍCULO 868.-
+La prescripción ordinaria de las acciones personales es de 10 años.
+Las acciones por responsabilidad extracontractual prescriben en cuatro años.
+Las acciones laborales prescriben en un año (Código de Trabajo).
+
+--- INSTITUCIONES ---
+- Juzgados Civiles: Para contratos, daños, herencias
+- Juzgados de Pensiones Alimentarias: Para pensión alimentaria (gratuito)
+- Registro Nacional: Para trámites de propiedad y herencias
+- Colegio de Abogados de Costa Rica: Para buscar abogado (SICAI): www.abogados.or.cr

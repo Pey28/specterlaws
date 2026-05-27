@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AreasLegales from "@/components/AreasLegales";
+import Documentos from "@/components/Documentos";
 import ComoFunciona from "@/components/ComoFunciona";
 import Confianza from "@/components/Confianza";
 import CTA from "@/components/CTA";
@@ -13,6 +14,7 @@ export default function Home() {
       <main className="pt-16">
         <Hero />
         <AreasLegales />
+        <Documentos />
         <ComoFunciona />
         <Confianza />
         <CTA />

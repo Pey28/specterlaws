@@ -1,31 +1,135 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #1a1a2e;
-  --cr-blue: #003F87;
-  --cr-red: #CF142B;
-  --cr-blue-light: #1a5cb8;
-  --cr-red-light: #e82e44;
+  /* Premium dark (legal-tech) */
+  --background: #0a0f1e; /* deep blue-black */
+  --foreground: #eaf0ff; /* near-white */
+  --muted: #a8b3cf;
+  --muted-2: #7e8bb0;
+  --surface: rgba(255, 255, 255, 0.06);
+  --surface-2: rgba(255, 255, 255, 0.09);
+  --border: rgba(255, 255, 255, 0.12);
+  --border-strong: rgba(120, 160, 255, 0.22);
+  --ring: rgba(59, 130, 246, 0.35);
+
+  /* Brand accents (CR) tuned for dark */
+  --cr-blue: #3b82f6; /* electric blue */
+  --cr-red: #ff4d6d; /* soft red */
+  --cr-blue-light: #77a7ff;
+  --cr-red-light: #ff7a93;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-2: var(--muted-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
   --color-cr-blue: var(--cr-blue);
   --color-cr-red: var(--cr-red);
   --color-cr-blue-light: var(--cr-blue-light);
   --color-cr-red-light: var(--cr-red-light);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-display);
 }
 
 body {
-  background: var(--background);
+  background: radial-gradient(1100px 700px at 20% -10%, rgba(59, 130, 246, 0.22), transparent 60%),
+    radial-gradient(900px 600px at 90% 10%, rgba(255, 77, 109, 0.14), transparent 55%),
+    radial-gradient(800px 520px at 50% 110%, rgba(119, 167, 255, 0.16), transparent 60%),
+    var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Subtle animated lines + particles (very low contrast) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.10) 50%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 70% 20%, rgba(119, 167, 255, 0.18) 50%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 65% 75%, rgba(255, 122, 147, 0.14) 50%, transparent 55%),
+    radial-gradient(2px 2px at 35% 80%, rgba(255, 255, 255, 0.09) 50%, transparent 55%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 120px
+    );
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  transform: translateZ(0);
+  animation: lexcr-float 14s ease-in-out infinite;
+}
+
+@keyframes lexcr-float {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Reusable premium UI helpers */
+.lexcr-glass {
+  background: rgba(10, 15, 30, 0.55);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.lexcr-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(120, 160, 255, 0.18);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.lexcr-card:hover {
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.62),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 0 26px rgba(59, 130, 246, 0.18);
+}
+
+.lexcr-glow-blue {
+  filter: drop-shadow(0 0 16px rgba(59, 130, 246, 0.28));
+}
+
+.lexcr-glow-red {
+  filter: drop-shadow(0 0 14px rgba(255, 77, 109, 0.22));
+}
+
+@keyframes lexcr-fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.lexcr-animate-in {
+  animation: lexcr-fade-up 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }

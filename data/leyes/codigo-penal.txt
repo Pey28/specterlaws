@@ -1,0 +1,85 @@
+=== CÓDIGO PENAL DE COSTA RICA ===
+Ley N° 4573, del 4 de mayo de 1970 y sus reformas
+Fuente: http://www.pgrweb.go.cr/scij/
+
+--- DERECHOS DEL IMPUTADO ---
+
+ARTÍCULO 37 (Constitución Política - Detención).-
+Nadie podrá ser detenido sin un indicio comprobado de haber cometido delito, y sin mandato escrito de juez o autoridad encargada del orden público. En todo caso, el detenido debe ser puesto a disposición del juez competente dentro de las 24 horas siguientes.
+
+DERECHOS FUNDAMENTALES AL SER DETENIDO:
+Al momento de la detención, toda persona tiene derecho a:
+1. Ser informado del motivo de su detención;
+2. Guardar silencio y no declarar contra sí mismo;
+3. Comunicarse con un abogado de su elección o con un defensor público;
+4. Ser informado de sus derechos en un idioma que comprenda;
+5. No ser sometido a torturas, tratos crueles o degradantes.
+
+--- DELITOS CONTRA LA PROPIEDAD ---
+
+ARTÍCULO 208.- HURTO
+Será reprimido con prisión de un mes a tres años, el que se apoderare de una cosa mueble ajena, con ánimo de lucro, sin violencia ni intimidación en las personas ni fuerza en las cosas.
+
+ARTÍCULO 212.- ROBO
+Será reprimido con prisión de uno a ocho años, el que se apoderare ilegítimamente de una cosa mueble total o parcialmente ajena, con fuerza en las cosas o con violencia o intimidación en las personas.
+
+ARTÍCULO 216.- ESTAFA
+Será reprimido con prisión de dos a seis años, el que induciendo a alguien en error, mediante artificios o engaños, lo motive a realizar en perjuicio propio o ajeno un acto de disposición patrimonial.
+
+--- DELITOS INFORMATICOS (Ley 9048) ---
+
+ARTÍCULO 217 bis.- FRAUDE INFORMÁTICO
+Será reprimido con prisión de uno a diez años, quien con la intención de procurar un beneficio económico indebido, acceda, modifique, altere, manipule, dañe o destruya sistemas de cómputo o datos.
+
+ARTÍCULO 230.- SUPLANTACIÓN DE IDENTIDAD
+Quien utilice la identidad o datos personales de otra persona para engañar u obtener beneficio, será sancionado con prisión de uno a tres años.
+
+--- VIOLENCIA DOMÉSTICA ---
+
+LEY 7586 - LEY CONTRA LA VIOLENCIA DOMÉSTICA
+La violencia doméstica comprende actos de violencia:
+- Física: golpes, agresiones corporales
+- Psicológica: intimidación, amenazas, humillación
+- Sexual: actos sexuales sin consentimiento dentro de la relación
+- Patrimonial: destrucción de bienes, negación de recursos económicos
+
+Para denunciar violencia doméstica:
+1. Presentarse a cualquier Fiscalía o Alcaldía de Justicia
+2. Llamar al 911 en caso de emergencia
+3. OIJ: Organismo de Investigación Judicial
+4. Poder Judicial (Juzgados de Violencia Doméstica)
+
+Las medidas de protección incluyen:
+- Prohibición al agresor de acercarse a la víctima
+- Salida del agresor del hogar
+- Custodia provisional de menores
+
+--- DELITOS SEXUALES ---
+
+ARTÍCULO 156.- VIOLACIÓN
+Será sancionado con pena de prisión de doce a dieciocho años quien realice la cópula con persona de cualquier sexo mediante la violencia o la amenaza.
+
+ARTÍCULO 161.- ABUSO SEXUAL
+Quien realice actos con propósitos sexuales contra una persona sin su consentimiento, sin llegar a la cópula, será sancionado con prisión de tres a diez años.
+
+ARTÍCULO 170.- ACOSO SEXUAL
+Quien hostigue o acose sexualmente a otra persona con proposiciones de tipo sexual, aprovechándose de una relación de poder, será sancionado con prisión de tres meses a dos años.
+
+--- PROCESO PENAL ---
+
+DERECHO AL DEBIDO PROCESO:
+- El imputado es inocente hasta que se demuestre lo contrario (principio de inocencia)
+- Toda condena requiere prueba más allá de toda duda razonable
+- El juicio debe ser oral y público
+- El imputado tiene derecho a enfrentar a los testigos en su contra
+- Tiene derecho a presentar testigos y pruebas a su favor
+
+FLAGRANCIA:
+Una persona puede ser detenida sin orden judicial cuando es sorprendida en el momento de cometer el delito o inmediatamente después.
+
+--- INSTITUCIONES ---
+- OIJ (Organismo de Investigación Judicial): 2295-3000 / www.oij.go.cr
+- Ministerio Público (Fiscalía): Para presentar denuncias penales
+- Defensa Pública: Abogados gratuitos para quien no puede pagar (800-800-3333)
+- Poder Judicial: www.poder-judicial.go.cr
+- 911: Emergencias y delitos en flagrancia

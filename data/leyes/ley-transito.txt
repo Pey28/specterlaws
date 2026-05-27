@@ -1,0 +1,110 @@
+=== LEY DE TRÁNSITO POR VÍAS PÚBLICAS TERRESTRES Y SEGURIDAD VIAL ===
+Ley N° 9078, del 4 de octubre de 2012 y sus reformas
+Fuente: http://www.pgrweb.go.cr/scij/
+
+--- LICENCIAS DE CONDUCIR ---
+
+ARTÍCULO 83.-
+Para conducir vehículos en Costa Rica se requiere licencia vigente. Las categorías son:
+- B1: Vehículos livianos (automóviles, pickups)
+- B2: Motocicletas
+- C: Vehículos pesados (camiones)
+- D: Autobuses y transporte público
+- E: Maquinaria especial
+
+ARTÍCULO 84.-
+La licencia puede suspenderse o cancelarse por acumulación de puntos negativos, por infracciones graves o por sentencia judicial. El sistema de puntos descuenta puntos al cometer infracciones.
+
+--- VELOCIDADES MÁXIMAS ---
+
+ARTÍCULO 95.-
+Las velocidades máximas permitidas son:
+- Zonas residenciales y escolares: 25 km/h
+- Vías urbanas: 40 km/h
+- Carreteras secundarias: 60 km/h
+- Carreteras principales fuera de ciudad: 80 km/h
+- Autopistas: 100 km/h (120 km/h en tramos específicos con señal)
+
+--- CONDUCCIÓN BAJO EFECTOS DEL ALCOHOL ---
+
+ARTÍCULO 107.-
+Se prohíbe conducir bajo la influencia del alcohol. Los límites son:
+- Licencia B1 (particular): 0.50 gramos de alcohol por litro de sangre
+- Conductores profesionales (taxi, bus, transporte): 0.00 g/L (tolerancia cero)
+- Menores de edad: 0.00 g/L
+
+ARTÍCULO 108.-
+Las sanciones por conducir en estado de ebriedad son:
+- Primera vez: suspensión de licencia + multa
+- Segunda vez: suspensión prolongada + multa mayor
+- Accidente con lesiones: prisión de 1 a 3 años
+- Accidente con muerte: prisión de 3 a 8 años (homicidio culposo agravado)
+
+--- OBLIGACIONES AL CONDUCIR ---
+
+ARTÍCULO 88.-
+Todo conductor debe:
+a) Portar licencia de conducir vigente;
+b) Portar Revisión Técnica Vehicular (RTV) al día;
+c) Portar seguro obligatorio del INS (SOAT) vigente;
+d) Respetar señales de tránsito;
+e) Usar cinturón de seguridad;
+f) No usar el teléfono sin manos libres mientras conduce.
+
+--- ACCIDENTES DE TRÁNSITO ---
+
+ARTÍCULO 132.-
+En caso de accidente de tránsito:
+1. Detener el vehículo y prestar auxilio a los heridos;
+2. Llamar al 911 y al 800-800-0645 (INS);
+3. No mover los vehículos hasta que llegue la policía, salvo riesgo mayor;
+4. Intercambiar información con el otro conductor (nombre, cédula, placa, seguro);
+5. Reportar al INS dentro de los 8 días hábiles siguientes.
+
+ARTÍCULO 133.-
+Abandonar el lugar del accidente sin prestar auxilio ni identificarse constituye delito penal.
+
+--- SEGURO OBLIGATORIO (INS) ---
+
+Todo vehículo en circulación debe tener el Seguro Obligatorio de Automóviles del INS. Este cubre:
+- Gastos médicos de víctimas de accidentes de tránsito
+- Muerte de víctimas (indemnización a familiares)
+- Se aplica independientemente de quién tenga la culpa
+
+--- INFRACCIONES Y MULTAS ---
+
+INFRACCIONES LEVES (multa ~₡50,000):
+- Exceso de velocidad hasta 20 km/h sobre el límite
+- No usar cinturón
+- Hablar por teléfono sin manos libres
+
+INFRACCIONES GRAVES (multa ~₡100,000 + puntos):
+- Exceso de velocidad más de 20 km/h sobre el límite
+- No respetar semáforo en rojo
+- Conducir sin licencia vigente
+
+INFRACCIONES MUY GRAVES (multa alta + suspensión de licencia):
+- Conducir bajo efectos del alcohol o drogas
+- Participar en carreras ilegales (piques)
+- Conducir en sentido contrario
+
+--- REVISIÓN TÉCNICA VEHICULAR (RTV) ---
+
+Todos los vehículos deben pasar la Revisión Técnica Vehicular (RTV):
+- Vehículos nuevos: primer año de uso exentos, luego cada 2 años
+- Vehículos de más de 5 años: cada año
+- Transporte público: cada 6 meses
+
+--- DERECHOS ANTE UNA MULTA ---
+
+Si considerás que una multa es injusta:
+1. Tenés derecho a impugnarla ante el COSEVI (Consejo de Seguridad Vial)
+2. El plazo para impugnar es de 30 días hábiles
+3. Podés solicitar audiencia oral
+
+--- INSTITUCIONES ---
+- COSEVI (Consejo de Seguridad Vial): www.csv.go.cr
+- INS (Seguro): 800-800-0645 para reportar accidentes
+- Policía de Tránsito: 911 / 2222-9330
+- MOPT (Ministerio de Obras Públicas y Transportes): www.mopt.go.cr
+- RITEVE / RTV: Para revisión técnica vehicular
