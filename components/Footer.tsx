@@ -1,18 +1,13 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer className="mt-auto text-white/55 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex flex-col justify-center gap-[3px]">
-                <span className="block w-5 h-1 rounded-sm bg-cr-blue" />
-                <span className="block w-5 h-1 rounded-sm bg-cr-red" />
-                <span className="block w-5 h-1 rounded-sm bg-cr-blue" />
-              </div>
-              <span className="text-xl font-bold text-white">
-                Specter<span className="text-cr-red">laws</span>
-              </span>
+            <div className="mb-4">
+              <Image src="/logo.png" alt="Specterlaws" width={140} height={46} className="h-9 w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed max-w-sm">
               Tu asistente legal inteligente, especializado en la legislación de Costa Rica.

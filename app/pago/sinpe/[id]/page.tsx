@@ -68,7 +68,7 @@ export default function SinpePage() {
           <span className="block w-4 h-0.5 rounded-sm bg-[#C0392B]" />
           <span className="block w-4 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
         </div>
-        <span className="text-xl font-bold text-[#1A3A6B]">Specter<span className="text-[#C0392B]">laws</span></span>
+        <img src="/logo.png" alt="Specterlaws" className="h-7 w-auto object-contain" />
       </Link>
 
       {enviado ? (

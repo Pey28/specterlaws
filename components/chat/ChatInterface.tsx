@@ -187,7 +187,7 @@ export default function ChatInterface() {
             <span className="block w-4 h-0.5 rounded-sm bg-cr-red lexcr-glow-red" />
             <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
           </div>
-          <span className="text-lg font-bold">Specter<span className="text-cr-red">laws</span></span>
+          <img src="/logo.png" alt="Specterlaws" className="h-8 w-auto object-contain" />
         </Link>
         <div className="h-5 w-px bg-white/15 mx-1" />
         <span className="text-sm text-white/60 hidden sm:inline">Asistente Legal</span>

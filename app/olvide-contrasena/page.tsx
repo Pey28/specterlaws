@@ -8,15 +8,8 @@ export const metadata: Metadata = {
 export default function OlvideContrasenaPage() {
   return (
     <div className="min-h-screen bg-[#F0F4F8] flex flex-col items-center justify-center px-4 py-12">
-      <Link href="/" className="flex items-center gap-2 mb-8 hover:opacity-80 transition-opacity">
-        <div className="flex flex-col gap-[3px]">
-          <span className="block w-5 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
-          <span className="block w-5 h-0.5 rounded-sm bg-[#C0392B]" />
-          <span className="block w-5 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
-        </div>
-        <span className="text-2xl font-bold text-[#1A3A6B]">
-          Specter<span className="text-[#C0392B]">laws</span>
-        </span>
+      <Link href="/" className="flex items-center mb-8 hover:opacity-80 transition-opacity">
+        <img src="/logo.png" alt="Specterlaws" className="h-12 w-auto object-contain" />
       </Link>
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 w-full max-w-md p-8 text-center">

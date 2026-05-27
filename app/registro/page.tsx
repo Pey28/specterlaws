@@ -14,15 +14,8 @@ export default function RegistroPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       {/* Logo */}
-      <Link href="/" className="flex items-center gap-2 mb-8 hover:opacity-80 transition-opacity">
-        <div className="flex flex-col gap-[3px]">
-          <span className="block w-5 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
-          <span className="block w-5 h-0.5 rounded-sm bg-cr-red lexcr-glow-red" />
-          <span className="block w-5 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
-        </div>
-        <span className="text-2xl font-bold text-white">
-          Specter<span className="text-cr-red">laws</span>
-        </span>
+      <Link href="/" className="flex items-center mb-8 hover:opacity-80 transition-opacity">
+        <img src="/logo.png" alt="Specterlaws" className="h-12 w-auto object-contain" />
       </Link>
 
       {/* Card */}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -33,17 +34,15 @@ export default function Navbar() {
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navClass}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className={`flex items-center justify-between gap-2 transition-all duration-300 ${scrolled ? "h-14" : "h-16"}`}>
-            <Link href="/" className="flex items-center gap-2 shrink-0">
-              <div className="flex flex-col justify-center gap-[2px]">
-                <span className="block w-5 sm:w-6 h-[3px] rounded-sm bg-[#0f4fa8] shadow-[0_0_10px_rgba(15,79,168,0.55)]" />
-                <span className="block w-5 sm:w-6 h-[2px] rounded-sm bg-white/95" />
-                <span className="block w-5 sm:w-6 h-[3px] rounded-sm bg-[#ce1126] shadow-[0_0_10px_rgba(206,17,38,0.45)]" />
-                <span className="block w-5 sm:w-6 h-[2px] rounded-sm bg-white/95" />
-                <span className="block w-5 sm:w-6 h-[3px] rounded-sm bg-[#0f4fa8] shadow-[0_0_10px_rgba(15,79,168,0.55)]" />
-              </div>
-              <span className="text-xl sm:text-[1.65rem] font-semibold text-white tracking-[-0.02em] drop-shadow-[0_0_16px_rgba(15,79,168,0.3)]">
-                Specter<span className="text-[#ce1126]">laws</span>
-              </span>
+            <Link href="/" className="flex items-center shrink-0">
+              <Image
+                src="/logo.png"
+                alt="Specterlaws"
+                width={160}
+                height={52}
+                className="h-10 w-auto object-contain"
+                priority
+              />
             </Link>
 
             <div className="hidden md:flex items-center gap-5">
