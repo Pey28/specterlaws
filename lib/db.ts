@@ -140,7 +140,7 @@ export function createUser(data: {
   const id = crypto.randomUUID();
   getDb()
     .prepare(
-      "INSERT INTO users (id, nombre, email, password, provincia) VALUES (?, ?, ?, ?, ?)"
+      "INSERT OR IGNORE INTO users (id, nombre, email, password, provincia) VALUES (?, ?, ?, ?, ?)"
     )
     .run(id, data.nombre, data.email, data.password, data.provincia);
   return id;

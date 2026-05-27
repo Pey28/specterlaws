@@ -45,21 +45,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     ...authConfig.callbacks,
     async signIn({ user, account }) {
       if (account?.provider === "google" && user.email) {
-        let dbUser = getUserByEmail(user.email);
-        if (!dbUser) {
-          createUser({
-            nombre: user.name ?? user.email.split("@")[0],
-            email: user.email,
-            password: "",
-            provincia: "",
-          });
-          dbUser = getUserByEmail(user.email);
-        }
-        if (dbUser) {
-          user.id = dbUser.id;
-          (user as { plan?: string }).plan = getUserPlan(dbUser.id);
-          (user as { provincia?: string }).provincia = dbUser.provincia ?? "";
-        }
+        // INSERT OR IGNORE handles concurrent requests — no duplicates possible
+        createUser({
+          nombre: user.name ?? user.email.split("@")[0],
+          email: user.email,
+          password: "",
+          provincia: "",
+        });
+        const dbUser = getUserByEmail(user.email);
+        if (!dbUser) return false;
+        user.id = dbUser.id;
+        (user as { plan?: string }).plan = getUserPlan(dbUser.id);
+        (user as { provincia?: string }).provincia = dbUser.provincia ?? "";
       }
       return true;
     },
