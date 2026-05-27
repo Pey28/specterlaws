@@ -32,11 +32,7 @@ export default async function PerfilPage() {
     <div className="min-h-screen bg-[#F0F4F8]">
       <header className="bg-[#1A3A6B] text-white px-4 py-3 flex items-center gap-3 shadow-md">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <div className="flex flex-col gap-[3px]">
-            <span className="block w-4 h-0.5 rounded-sm bg-white/60" />
-            <span className="block w-4 h-0.5 rounded-sm bg-[#C0392B]" />
-            <span className="block w-4 h-0.5 rounded-sm bg-white/60" />
-          </div>
+          
           <img src="/logo.png" alt="Specterlaws" className="h-8 w-auto object-contain" />
         </Link>
         <div className="h-5 w-px bg-white/20 mx-1" />

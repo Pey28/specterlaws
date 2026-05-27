@@ -36,11 +36,7 @@ export default function PreciosPage() {
       {/* Header */}
       <header className="lexcr-glass text-white px-4 py-3 flex items-center gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.55)]">
         <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          <div className="flex flex-col gap-[3px]">
-            <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
-            <span className="block w-4 h-0.5 rounded-sm bg-cr-red lexcr-glow-red" />
-            <span className="block w-4 h-0.5 rounded-sm bg-cr-blue/70 lexcr-glow-blue" />
-          </div>
+          
           <img src="/logo.png" alt="Specterlaws" className="h-8 w-auto object-contain" />
         </Link>
         <div className="h-5 w-px bg-white/15 mx-1" />

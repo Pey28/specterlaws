@@ -92,7 +92,7 @@ Si el caso requiere atención especializada, recomienda el SICAI o la Defensorí
 Cuando se te proporcionen artículos de legislación, úsalos como base principal y cita los números exactamente.${archivosSuffix}${ragSuffix}`;
 
     const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-6",
       max_tokens: 1000,
       system: systemPrompt,
       messages: mensajes as { role: "user" | "assistant"; content: string }[],

@@ -63,11 +63,7 @@ export default function SinpePage() {
   return (
     <div className="min-h-screen bg-[#F0F4F8] flex flex-col items-center justify-center px-4 py-12">
       <Link href="/" className="flex items-center gap-2 mb-8">
-        <div className="flex flex-col gap-[3px]">
-          <span className="block w-4 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
-          <span className="block w-4 h-0.5 rounded-sm bg-[#C0392B]" />
-          <span className="block w-4 h-0.5 rounded-sm bg-[#1A3A6B]/60" />
-        </div>
+        
         <img src="/logo.png" alt="Specterlaws" className="h-7 w-auto object-contain" />
       </Link>
 
