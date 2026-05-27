@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
-import { getUserByEmail, getUserPlan, createUser } from "@/lib/db";
+import { getUserByEmail, getUserPlan, getUserRole, createUser } from "@/lib/db";
 import { authConfig } from "./auth.config";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -37,6 +37,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           email: user.email,
           provincia: user.provincia,
           plan,
+          role: getUserRole(user.id),
         };
       },
     }),
@@ -57,6 +58,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         user.id = dbUser.id;
         (user as { plan?: string }).plan = getUserPlan(dbUser.id);
         (user as { provincia?: string }).provincia = dbUser.provincia ?? "";
+        (user as { role?: string }).role = getUserRole(dbUser.id);
       }
       return true;
     },

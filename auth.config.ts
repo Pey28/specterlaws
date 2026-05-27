@@ -12,6 +12,7 @@ export const authConfig: NextAuthConfig = {
         token.id = user.id;
         token.provincia = (user as { provincia?: string }).provincia ?? "";
         token.plan = ((user as { plan?: PlanId }).plan ?? "gratis") as PlanId;
+        token.role = ((user as { role?: "admin" | "user" }).role ?? "user");
       }
       return token;
     },
@@ -19,6 +20,7 @@ export const authConfig: NextAuthConfig = {
       session.user.id = token.id as string;
       session.user.provincia = token.provincia as string;
       session.user.plan = (token.plan ?? "gratis") as PlanId;
+      session.user.role = (token.role ?? "user") as "admin" | "user";
       return session;
     },
   },

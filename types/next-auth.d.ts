@@ -7,12 +7,14 @@ declare module "next-auth" {
       id: string;
       provincia: string;
       plan: PlanId;
+      role: "admin" | "user";
     } & DefaultSession["user"];
   }
 
   interface User {
     provincia?: string;
     plan?: PlanId;
+    role?: "admin" | "user";
   }
 }
 
@@ -21,5 +23,6 @@ declare module "next-auth/jwt" {
     id?: string;
     provincia?: string;
     plan?: PlanId;
+    role?: "admin" | "user";
   }
 }

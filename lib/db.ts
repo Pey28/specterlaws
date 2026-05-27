@@ -74,11 +74,18 @@ function getDb() {
       );
     `);
 
-    // Safe migration: add plan column if it doesn't exist in users
+    // Safe migrations
     const cols = _db.prepare("PRAGMA table_info(users)").all() as { name: string }[];
     if (!cols.find((c) => c.name === "plan")) {
       _db.prepare("ALTER TABLE users ADD COLUMN plan TEXT NOT NULL DEFAULT 'gratis'").run();
     }
+    if (!cols.find((c) => c.name === "role")) {
+      _db.prepare("ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'").run();
+    }
+    // Assign admin role to the designated email
+    _db.prepare(
+      "UPDATE users SET role = 'admin' WHERE email = ? AND role != 'admin'"
+    ).run("ibssecr360@gmail.com");
   }
   return _db;
 }
@@ -92,7 +99,15 @@ export interface DbUser {
   password: string;
   provincia: string;
   plan: PlanId;
+  role: "admin" | "user";
   created_at: string;
+}
+
+export function getUserRole(userId: string): "admin" | "user" {
+  const row = getDb()
+    .prepare("SELECT role FROM users WHERE id = ?")
+    .get(userId) as { role: string } | undefined;
+  return row?.role === "admin" ? "admin" : "user";
 }
 
 export interface DbConsulta {
