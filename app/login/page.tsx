@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-[100dvh] flex flex-col items-center justify-center px-4 py-8 sm:py-12 pb-[max(2rem,env(safe-area-inset-bottom))]">
       {/* Logo */}
       <Link href="/" className="flex items-center mb-8 hover:opacity-80 transition-opacity">
         <img src="/logo.png" alt="Specterlaws" className="h-12 w-auto object-contain" />
       </Link>
 
       {/* Card */}
-      <div className="rounded-2xl w-full max-w-md p-8 lexcr-card border border-white/10">
+      <div className="rounded-2xl w-full max-w-md p-6 sm:p-8 lexcr-card border border-white/10">
         <div className="mb-6">
           <h1 className="text-2xl font-serif font-semibold text-white mb-1">Bienvenido de vuelta</h1>
           <p className="text-sm text-white/60">Iniciá sesión para continuar con tu asistente legal.</p>

@@ -2,17 +2,17 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="mt-auto text-white/55 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
-          <div className="lg:col-span-2">
+    <footer className="mt-auto bg-black text-white/55 border-t border-white/10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-10 mb-10 sm:mb-12">
+          <div className="lg:col-span-2 text-center sm:text-left">
             <div className="mb-4">
               <Image src="/logo.png" alt="Specterlaws" width={140} height={46} className="h-9 w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed max-w-sm">
               Tu asistente legal inteligente, especializado en la legislación de Costa Rica.
             </p>
-            <div className="flex items-center gap-3 mt-6">
+            <div className="flex items-center justify-center sm:justify-start gap-3 mt-6">
               <a
                 href="#"
                 aria-label="Facebook"
@@ -52,18 +52,18 @@ export default function Footer() {
             </div>
           </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Áreas Legales</h4>
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-3 sm:mb-4 text-sm uppercase tracking-wider">Áreas Legales</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#areas" className="hover:text-white transition-colors">Derecho Laboral</a></li>
-              <li><a href="#areas" className="hover:text-white transition-colors">Derecho Civil</a></li>
-              <li><a href="#areas" className="hover:text-white transition-colors">Derecho Penal</a></li>
-              <li><a href="#areas" className="hover:text-white transition-colors">Derecho del Consumidor</a></li>
+              <li><a href="/chat" className="hover:text-white transition-colors">Derecho Laboral</a></li>
+              <li><a href="/chat" className="hover:text-white transition-colors">Derecho Civil</a></li>
+              <li><a href="/chat" className="hover:text-white transition-colors">Derecho Penal</a></li>
+              <li><a href="/chat" className="hover:text-white transition-colors">Derecho del Consumidor</a></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Enlaces</h4>
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-3 sm:mb-4 text-sm uppercase tracking-wider">Enlaces</h4>
             <ul className="space-y-2 text-sm">
               <li><a href="#documentos" className="hover:text-white transition-colors">Documentos</a></li>
               <li><a href="#como-funciona" className="hover:text-white transition-colors">Cómo Funciona</a></li>
@@ -72,8 +72,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Instituciones CR</h4>
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-3 sm:mb-4 text-sm uppercase tracking-wider">Instituciones CR</h4>
             <ul className="space-y-2 text-sm">
               <li>Ministerio de Trabajo (MTSS)</li>
               <li>MEIC – Consumidor</li>
@@ -82,14 +82,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Contacto</h4>
+          <div className="text-center sm:text-left">
+            <h4 className="text-white font-semibold mb-3 sm:mb-4 text-sm uppercase tracking-wider">Contacto</h4>
             <ul className="space-y-2 text-sm">
               <li>📍 San José, Costa Rica</li>
               <li>📧 hola@specterlaws.cr</li>
               <li className="pt-2">
                 <a
-                  href="#consultar"
+                  href="/chat"
                   className="inline-block bg-cr-red hover:bg-cr-red-light text-white text-xs font-semibold px-4 py-2 rounded-full transition-colors"
                 >
                   Consulta Gratis

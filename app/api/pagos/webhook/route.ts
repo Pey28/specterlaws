@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { confirmarPagoStripe } from "@/lib/db";
+import { apiError, apiOk } from "@/lib/api-response";
 
 export async function POST(req: NextRequest) {
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
-    return NextResponse.json({ error: "Stripe no configurado." }, { status: 503 });
+    return apiError("Stripe no configurado.", 503);
   }
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -15,13 +16,17 @@ export async function POST(req: NextRequest) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch {
-    return NextResponse.json({ error: "Firma inválida." }, { status: 400 });
+    return apiError("Firma inválida.", 400);
   }
 
-  if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
-    confirmarPagoStripe(session.id);
+  try {
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object as Stripe.Checkout.Session;
+      confirmarPagoStripe(session.id);
+    }
+    return apiOk({ received: true });
+  } catch (error) {
+    console.error("stripe webhook error:", error);
+    return apiError("Error procesando webhook.", 500);
   }
-
-  return NextResponse.json({ received: true });
 }

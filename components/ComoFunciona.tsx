@@ -26,21 +26,21 @@ const pasos = [
 
 export default function ComoFunciona() {
   return (
-    <section id="como-funciona" className="py-24">
+    <section id="como-funciona" className="lexcr-section-pad">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 lexcr-animate-in">
-          <span className="text-cr-red font-semibold text-sm uppercase tracking-wider">Simple y rápido</span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-4">
+        <div className="text-center mb-10 sm:mb-16 lexcr-animate-in">
+          <span className="text-cr-red font-semibold text-xs sm:text-sm uppercase tracking-wider">Simple y rápido</span>
+          <h2 className="text-2xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-3 sm:mb-4 px-2">
             ¿Cómo funciona Specterlaws?
           </h2>
-          <p className="text-white/65 max-w-xl mx-auto text-lg">
+          <p className="text-white/65 max-w-xl mx-auto text-base sm:text-lg px-2">
             Sin citas, sin formularios, sin esperas. Asesoría legal disponible las 24 horas.
           </p>
         </div>
 
         {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 relative">
           {/* Connector line (desktop) */}
           <div className="hidden md:block absolute top-14 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-cr-blue via-cr-red to-cr-blue opacity-30" />
 

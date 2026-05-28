@@ -61,22 +61,22 @@ const documentos = [
 
 export default function Documentos() {
   return (
-    <section id="documentos" className="py-24">
+    <section id="documentos" className="lexcr-section-pad">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-6 lexcr-animate-in">
-          <span className="text-cr-red font-semibold text-sm uppercase tracking-wider">Gratis y al instante</span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-4">
+        <div className="text-center mb-6 sm:mb-8 lexcr-animate-in">
+          <span className="text-cr-red font-semibold text-xs sm:text-sm uppercase tracking-wider">Gratis y al instante</span>
+          <h2 className="text-2xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-3 sm:mb-4 px-2">
             Generamos tus Documentos Legales
           </h2>
-          <p className="text-white/65 max-w-2xl mx-auto text-lg">
+          <p className="text-white/65 max-w-2xl mx-auto text-base sm:text-lg px-2">
             Documentos con validez legal en Costa Rica, listos para usar.
             No requieren firma de abogado.
           </p>
         </div>
 
         {/* Disclaimer banner */}
-        <div className="flex items-start gap-3 rounded-xl px-5 py-4 max-w-3xl mx-auto mb-12 lexcr-glass border border-amber-500/20">
+        <div className="flex items-start gap-3 rounded-xl px-4 sm:px-5 py-4 max-w-3xl mx-auto mb-10 sm:mb-12 lexcr-glass border border-amber-500/20">
           <span className="text-amber-300 text-xl mt-0.5">⚠️</span>
           <p className="text-amber-100/90 text-sm leading-relaxed">
             <strong>Importante:</strong> Los documentos generados por Specterlaws son válidos para trámites personales, laborales y del consumidor que <strong>no requieren autenticación notarial ni firma de abogado</strong>. Para documentos que exigen firma ante notario (escrituras, poderes notariales, etc.) deberás consultar un profesional.

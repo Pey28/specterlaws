@@ -1,6 +1,28 @@
 import type { NextAuthConfig } from "next-auth";
 import type { PlanId } from "./lib/planes";
 
+type SessionClaims = {
+  id: string;
+  provincia: string;
+  plan: PlanId;
+  role: "admin" | "user";
+};
+
+function toSessionClaims(user: {
+  id?: string;
+  provincia?: string;
+  plan?: PlanId;
+  role?: "admin" | "user";
+}): SessionClaims | null {
+  if (!user.id) return null;
+  return {
+    id: user.id,
+    provincia: user.provincia ?? "",
+    plan: user.plan ?? "gratis",
+    role: user.role ?? "user",
+  };
+}
+
 // Edge-compatible config — no Node.js imports (no DB)
 export const authConfig: NextAuthConfig = {
   pages: {
@@ -9,10 +31,13 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.provincia = (user as { provincia?: string }).provincia ?? "";
-        token.plan = ((user as { plan?: PlanId }).plan ?? "gratis") as PlanId;
-        token.role = ((user as { role?: "admin" | "user" }).role ?? "user");
+        const claims = toSessionClaims(user);
+        if (claims) {
+          token.id = claims.id;
+          token.provincia = claims.provincia;
+          token.plan = claims.plan;
+          token.role = claims.role;
+        }
       }
       return token;
     },

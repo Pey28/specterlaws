@@ -42,20 +42,8 @@ export default function AreasLegales() {
   const [areaAbierta, setAreaAbierta] = useState<string | null>(null);
 
   return (
-    <section id="areas" className="py-20 sm:py-24">
-      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 lexcr-animate-in">
-          <span className="text-cr-red font-semibold text-sm uppercase tracking-wider">Especialidades</span>
-          <h2 className="text-3xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-4">
-            Áreas del Derecho Costarricense
-          </h2>
-          <p className="text-white/65 max-w-xl mx-auto text-lg">
-            Asesoría basada en la legislación vigente de Costa Rica. Consulta sin rodeos, en tu idioma.
-          </p>
-        </div>
-
-        {/* Cards grid */}
+    <section id="areas" className="lexcr-nav-offset pb-12 sm:pb-16 pt-4 sm:pt-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
           {areas.map((area, i) => (
             <div

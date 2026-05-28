@@ -113,6 +113,8 @@ export const MONTOS: Record<PlanId, number> = {
   b2b: 50000,
 };
 
+export const PLANES_PAGABLES: PlanId[] = ["basico", "profesional", "individual"];
+
 export function formatearPrecio(colones: number): string {
   return `₡${colones.toLocaleString("es-CR")}`;
 }

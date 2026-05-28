@@ -4,6 +4,14 @@ import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { getUserByEmail, getUserPlan, getUserRole, createUser } from "@/lib/db";
 import { authConfig } from "./auth.config";
+import type { User } from "next-auth";
+
+function applyUserClaims(user: User, dbUser: { id: string; provincia?: string }) {
+  user.id = dbUser.id;
+  user.plan = getUserPlan(dbUser.id);
+  user.provincia = dbUser.provincia ?? "";
+  user.role = getUserRole(dbUser.id);
+}
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   ...authConfig,
@@ -55,10 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
         const dbUser = getUserByEmail(user.email);
         if (!dbUser) return false;
-        user.id = dbUser.id;
-        (user as { plan?: string }).plan = getUserPlan(dbUser.id);
-        (user as { provincia?: string }).provincia = dbUser.provincia ?? "";
-        (user as { role?: string }).role = getUserRole(dbUser.id);
+        applyUserClaims(user, dbUser);
       }
       return true;
     },

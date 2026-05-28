@@ -10,7 +10,11 @@ type Chunk = {
 
 const LEYES_DIR = path.join(process.cwd(), "data", "leyes");
 
+// Module-level cache — leyes are static, load once per process lifetime
+let _cache: Chunk[] | null = null;
+
 function cargarLeyes(): Chunk[] {
+  if (_cache) return _cache;
   const chunks: Chunk[] = [];
 
   if (!fs.existsSync(LEYES_DIR)) return chunks;
@@ -40,7 +44,8 @@ function cargarLeyes(): Chunk[] {
     }
   }
 
-  return chunks;
+  _cache = chunks;
+  return _cache;
 }
 
 function normalizar(texto: string): string {

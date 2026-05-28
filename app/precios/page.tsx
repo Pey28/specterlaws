@@ -34,27 +34,29 @@ export default function PreciosPage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="lexcr-glass text-white px-4 py-3 flex items-center gap-3 shadow-[0_10px_40px_rgba(0,0,0,0.55)]">
-        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-          
-          <img src="/logo.png" alt="Specterlaws" className="h-8 w-auto object-contain" />
+      <header className="bg-black text-white px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-3 border-b border-white/10 lexcr-safe-top">
+        <Link href="/" className="flex items-center shrink-0 hover:opacity-80 transition-opacity">
+          <img src="/logo.png" alt="Specterlaws" className="h-8 w-auto max-w-[120px] object-contain" />
         </Link>
-        <div className="h-5 w-px bg-white/15 mx-1" />
-        <span className="text-sm text-white/60">Planes y Precios</span>
-        <div className="ml-auto flex items-center gap-3">
-          <Link href="/chat" className="text-xs bg-white/5 hover:bg-white/10 text-white px-3 py-1.5 rounded-lg border border-white/15 transition-colors">
+        <div className="hidden sm:block h-5 w-px bg-white/15" />
+        <span className="hidden sm:inline text-sm text-white/60 truncate">Planes y Precios</span>
+        <div className="ml-auto flex items-center gap-2 shrink-0">
+          <Link
+            href="/chat"
+            className="text-xs sm:text-sm bg-white/5 hover:bg-white/10 text-white px-3 py-2 rounded-lg border border-white/15 transition-colors whitespace-nowrap"
+          >
             Probar gratis
           </Link>
         </div>
       </header>
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-8 sm:py-12">
         {/* Hero */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 lexcr-glass rounded-full px-4 py-1.5 mb-4">
             <span className="text-white/80 text-sm font-medium">Todos los planes en colones costarricenses</span>
           </div>
-          <h1 className="text-4xl font-serif font-semibold text-white mb-3">
+          <h1 className="text-2xl sm:text-4xl font-serif font-semibold text-white mb-3 px-2">
             Defendé tus derechos desde <span className="text-cr-red">₡500</span>
           </h1>
           <p className="text-white/60 max-w-xl mx-auto">

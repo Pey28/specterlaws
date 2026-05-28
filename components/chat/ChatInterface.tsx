@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import ToolBar from "./ToolBar";
@@ -163,19 +163,19 @@ export default function ChatInterface() {
     [inputTexto, mensajes, archivos, cargando, autenticado, consultasLibres]
   );
 
-  const cargarConversacion = (conv: Conversacion) => {
+  const cargarConversacion = useCallback((conv: Conversacion) => {
     convIdRef.current = conv.id;
     setMensajes(conv.mensajes);
     setPanelActivo(null);
-  };
+  }, []);
 
-  const nuevaConversacion = () => {
+  const nuevaConversacion = useCallback(() => {
     convIdRef.current = Date.now().toString();
     setMensajes([]);
     setInputTexto("");
-  };
+  }, []);
 
-  const consultasRestantes = LIMITE_GRATIS - consultasLibres;
+  const consultasRestantes = useMemo(() => LIMITE_GRATIS - consultasLibres, [consultasLibres]);
 
   return (
     <div className="flex flex-col h-[100dvh] min-h-[100svh] lexcr-chat-pattern">

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { buscarArticulos } from "@/lib/rag";
 import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 import { validarConsultaLey } from "@/lib/validar-input";
+import { apiError } from "@/lib/api-response";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -16,7 +17,7 @@ export async function POST(req: NextRequest) {
 
   if (!allowed) {
     return NextResponse.json(
-      { error: `Demasiadas búsquedas. Esperá ${Math.ceil(resetIn / 1000)} segundos.` },
+      { ok: false, error: `Demasiadas búsquedas. Esperá ${Math.ceil(resetIn / 1000)} segundos.` },
       {
         status: 429,
         headers: { "Retry-After": String(Math.ceil(resetIn / 1000)) },
@@ -29,12 +30,12 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "JSON inválido." }, { status: 400 });
+    return apiError("JSON inválido.", 400);
   }
 
   const validacion = validarConsultaLey(body);
   if (!validacion.valido) {
-    return NextResponse.json({ error: validacion.error }, { status: 400 });
+    return apiError(validacion.error, 400);
   }
 
   // 3. Procesar
@@ -56,11 +57,16 @@ Cuando se te proporcionen artículos de legislación, úsalos como base principa
     const respuesta = message.content[0].type === "text" ? message.content[0].text : "";
 
     return NextResponse.json(
-      { respuesta },
-      { headers: { "X-RateLimit-Remaining": String(remaining) } }
+      { ok: true, respuesta },
+      {
+        headers: {
+          "X-RateLimit-Remaining": String(remaining),
+          "Cache-Control": "private, max-age=300",
+        },
+      }
     );
   } catch (err) {
     console.error("buscar-ley error:", err);
-    return NextResponse.json({ error: "Error al consultar la legislación." }, { status: 500 });
+    return apiError("Error al consultar la legislación.", 500);
   }
 }

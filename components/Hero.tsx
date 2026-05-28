@@ -2,27 +2,35 @@ import TypewriterText from "@/components/ui/TypewriterText";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[92svh] sm:min-h-[92vh] flex items-center overflow-hidden bg-[#05080f]">
-      {/* Overlay editorial oscuro */}
+    <section className="relative min-h-[100dvh] sm:min-h-[92vh] flex items-center overflow-hidden bg-black lexcr-nav-offset">
+      <div
+        className="hero-logo-bg absolute inset-0 z-0 bg-cover bg-no-repeat bg-center md:bg-[position:center_38%] sm:scale-105"
+        style={{ backgroundImage: "url(/logo-unificado.jpg?v=2)" }}
+        aria-hidden="true"
+      />
+
+      {/* Overlay suave: deja ver el logo y oscurece solo bordes para el texto */}
       <div
         className="absolute inset-0 z-[2] pointer-events-none"
         style={{
-          background:
-            "linear-gradient(92deg, rgba(4,7,14,0.92) 0%, rgba(4,7,14,0.82) 40%, rgba(4,7,14,0.68) 62%, rgba(4,7,14,0.78) 100%)",
+          background: [
+            "linear-gradient(180deg, #000000 0%, #000000 18%, rgba(0,0,0,0.72) 32%, rgba(0,0,0,0.2) 48%, rgba(0,0,0,0.08) 68%, rgba(0,0,0,0.4) 100%)",
+            "radial-gradient(ellipse 85% 75% at 50% 42%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.4) 100%)",
+          ].join(", "),
         }}
         aria-hidden="true"
       />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-24 sm:py-36 lg:py-40">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 py-10 sm:py-24 lg:py-32">
         <div className="max-w-3xl mx-auto text-center">
-          {/* Badge — below LCP, ok to animate */}
-          <div className="inline-flex items-center gap-3 rounded-full px-5 py-2 mb-8 border border-white/20 bg-black/35 shadow-lg ring-1 ring-white/10 lexcr-animate-in">
-            <span className="text-3xl leading-none" role="img" aria-label="Costa Rica">🇨🇷</span>
-            <span className="text-white/90 text-sm font-medium">Especializado en Leyes Costarricenses</span>
+          <div className="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 rounded-2xl sm:rounded-full px-4 sm:px-5 py-2.5 sm:py-2 mb-6 sm:mb-8 border border-white/20 bg-black/35 shadow-lg ring-1 ring-white/10 lexcr-animate-in max-w-[95vw]">
+            <span className="text-2xl sm:text-3xl leading-none" role="img" aria-label="Costa Rica">🇨🇷</span>
+            <span className="text-white/90 text-xs sm:text-sm font-medium text-center leading-snug">
+              Especializado en Leyes Costarricenses
+            </span>
           </div>
 
-          {/* H1 — LCP element: no animation delay, renders immediately */}
-          <h1 className="text-4xl sm:text-6xl lg:text-8xl font-serif font-medium text-white leading-[1.02] sm:leading-[0.98] mb-6 tracking-[-0.02em]">
+          <h1 className="lexcr-hero-title sm:text-5xl md:text-6xl lg:text-8xl font-serif font-medium text-white sm:leading-[0.98] mb-5 sm:mb-6 tracking-[-0.02em] [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
             <TypewriterText>Conoce y Defiende </TypewriterText>
             <span className="text-white inline-block leading-[0.95] border-b border-white/35">
               Tus Derechos
@@ -30,41 +38,24 @@ export default function Hero() {
             <TypewriterText speedMs={22}> en Costa Rica</TypewriterText>
           </h1>
 
-          <p className="text-base sm:text-xl text-white/78 max-w-2xl mb-8 sm:mb-10 leading-relaxed lexcr-mobile-clamp-2 sm:[display:block]">
+          <p className="text-sm sm:text-xl text-white/90 max-w-2xl mx-auto mb-7 sm:mb-10 leading-relaxed px-1 [text-shadow:0_1px_16px_rgba(0,0,0,0.8)]">
             Inteligencia artificial entrenada con la legislación costarricense. Consulta sobre
             derecho laboral, civil, penal y del consumidor — en segundos, en español.
           </p>
 
-          {/* CTA buttons — animate after LCP */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 sm:mb-14 w-full lexcr-animate-in" style={{ animationDelay: "120ms" }}>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-stretch sm:items-center mb-8 sm:mb-14 w-full max-w-md sm:max-w-none mx-auto lexcr-animate-in" style={{ animationDelay: "120ms" }}>
             <a
               href="/chat"
-              className="w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] px-7 rounded-md bg-white text-[#0b1220] font-semibold hover:bg-white/90 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center min-h-[48px] px-5 sm:px-7 rounded-md bg-white text-[#0b1220] font-semibold hover:bg-white/90 transition-colors text-sm sm:text-base"
             >
               Consultar Ahora — Es Gratis
             </a>
             <a
               href="#areas"
-              className="w-full sm:w-auto inline-flex items-center justify-center min-h-[46px] px-7 rounded-md border border-white/30 text-white hover:bg-white/10 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center min-h-[48px] px-5 sm:px-7 rounded-md border border-white/30 text-white hover:bg-white/10 transition-colors text-sm sm:text-base"
             >
               Ver Áreas Legales
             </a>
-          </div>
-
-          {/* Stats — animate last */}
-          <div className="grid grid-cols-3 gap-6 max-w-lg mx-auto pt-8 border-t border-white/20 lexcr-animate-in" style={{ animationDelay: "220ms" }}>
-            <div className="text-center">
-              <div className="lexcr-stat-value">100%</div>
-              <div className="text-white/60 text-xs sm:text-sm mt-1">Ley Costarricense</div>
-            </div>
-            <div className="text-center border-x border-white/10">
-              <div className="lexcr-stat-value">24/7</div>
-              <div className="text-white/60 text-xs sm:text-sm mt-1">Disponible</div>
-            </div>
-            <div className="text-center">
-              <div className="lexcr-stat-value">Gratis</div>
-              <div className="text-white/60 text-xs sm:text-sm mt-1">Consulta Inicial</div>
-            </div>
           </div>
         </div>
       </div>

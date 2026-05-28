@@ -2,7 +2,7 @@
 
 :root {
   /* Premium dark (legal-tech) */
-  --background: #0b1220; /* deep slate navy */
+  --background: #000000;
   --foreground: #e6ecf8; /* soft near-white */
   --muted: #9ba8c2;
   --muted-2: #75839f;
@@ -39,10 +39,7 @@
 }
 
 body {
-  background: radial-gradient(1100px 700px at 20% -10%, rgba(74, 111, 174, 0.18), transparent 60%),
-    radial-gradient(900px 600px at 90% 10%, rgba(143, 74, 90, 0.1), transparent 55%),
-    radial-gradient(800px 520px at 50% 110%, rgba(111, 143, 190, 0.14), transparent 60%),
-    var(--background);
+  background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     "Apple Color Emoji", "Segoe UI Emoji";
@@ -64,18 +61,16 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.10) 50%, transparent 55%),
-    radial-gradient(1.5px 1.5px at 70% 20%, rgba(119, 167, 255, 0.18) 50%, transparent 55%),
-    radial-gradient(1.5px 1.5px at 65% 75%, rgba(255, 122, 147, 0.14) 50%, transparent 55%),
-    radial-gradient(2px 2px at 35% 80%, rgba(255, 255, 255, 0.09) 50%, transparent 55%),
+    radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.06) 50%, transparent 55%),
+    radial-gradient(1.5px 1.5px at 70% 20%, rgba(255, 255, 255, 0.05) 50%, transparent 55%),
     repeating-linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.05) 0px,
-      rgba(255, 255, 255, 0.05) 1px,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 1px,
       transparent 1px,
       transparent 120px
     );
-  opacity: 0.35;
+  opacity: 0.18;
   mix-blend-mode: screen;
   will-change: transform;
   contain: layout paint;
@@ -97,14 +92,14 @@ body::before {
 
 /* Reusable premium UI helpers */
 .lexcr-glass {
-  background: rgba(10, 15, 30, 0.55);
+  background: rgba(0, 0, 0, 0.72);
   border: 1px solid var(--border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
 .lexcr-card {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
@@ -150,6 +145,11 @@ body::before {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--cr-red);
+}
+
+/* Hero: logo de fondo y tagline */
+.hero-logo-bg {
+  filter: brightness(1.2) contrast(1.15) saturate(1.1);
 }
 
 .lexcr-stat-value {
@@ -250,7 +250,7 @@ body::before {
 }
 
 .lexcr-step-icon {
-  animation: lexcr-step-float 4s ease-in-out infinite;
+  animation: none;
 }
 
 @keyframes lexcr-step-float {
@@ -296,57 +296,29 @@ body::before {
 
 .lexcr-area-card {
   position: relative;
-  border-radius: 1rem;
-  border: 1px solid color-mix(in srgb, var(--area-color) 52%, transparent);
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--area-color) 16%, transparent) 0%, rgba(255, 255, 255, 0.02) 45%, transparent 100%),
-    rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .lexcr-area-card::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, var(--area-color) 15%, transparent),
-    color-mix(in srgb, var(--area-color) 90%, white 10%),
-    color-mix(in srgb, var(--area-color) 18%, transparent)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  content: none;
   pointer-events: none;
 }
 
 .lexcr-area-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--area-color) 72%, transparent);
-  box-shadow:
-    0 14px 36px rgba(0, 0, 0, 0.42),
-    0 0 30px color-mix(in srgb, var(--area-color) 38%, transparent);
-}
-
-.lexcr-area-card:hover::before {
-  opacity: 1;
-  animation: lexcr-area-glow 2.4s linear infinite;
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
 }
 
 .lexcr-area-icon {
-  border-radius: 0.9rem;
-  border: 1px solid color-mix(in srgb, var(--area-color) 65%, transparent);
-  background: color-mix(in srgb, var(--area-color) 28%, rgba(8, 14, 30, 0.9));
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--area-color) 20%, transparent),
-    0 0 22px color-mix(in srgb, var(--area-color) 30%, transparent);
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 @keyframes lexcr-area-glow {
@@ -360,13 +332,9 @@ body::before {
 
 .lexcr-future-card {
   position: relative;
-  border-radius: 1rem;
-  border: 1px solid color-mix(in srgb, var(--card-color) 48%, transparent);
-  background:
-    linear-gradient(150deg, color-mix(in srgb, var(--card-color) 18%, transparent) 0%, rgba(255, 255, 255, 0.02) 48%, transparent 100%),
-    rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
   overflow: hidden;
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
@@ -377,29 +345,25 @@ body::before {
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--card-color) 18%, transparent);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
 .lexcr-future-card:hover {
-  transform: translateY(-4px);
-  border-color: color-mix(in srgb, var(--card-color) 70%, transparent);
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, 0.4),
-    0 0 28px color-mix(in srgb, var(--card-color) 30%, transparent);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24);
 }
 
 .lexcr-future-icon {
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--card-color) 55%, transparent);
-  background: color-mix(in srgb, var(--card-color) 30%, rgba(8, 14, 30, 0.92));
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--card-color) 20%, transparent),
-    0 0 20px color-mix(in srgb, var(--card-color) 28%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .lexcr-chat-pattern {
-  background-color: var(--background);
-  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.04) 1px, transparent 0);
+  background-color: #000000;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
   background-size: 28px 28px;
 }
 
@@ -448,6 +412,46 @@ body::before {
   }
 }
 
+/* Safe area (notch / home indicator) */
+.lexcr-safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.lexcr-nav-offset {
+  padding-top: calc(3.5rem + env(safe-area-inset-top, 0px));
+}
+
+@media (min-width: 768px) {
+  .lexcr-nav-offset {
+    padding-top: calc(4rem + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lexcr-nav-offset {
+    padding-top: calc(5rem + env(safe-area-inset-top, 0px));
+  }
+}
+
+.lexcr-section-pad {
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+@media (min-width: 640px) {
+  .lexcr-section-pad {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lexcr-section-pad {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
 @media (max-width: 639px) {
   .lexcr-mobile-scroll {
     -ms-overflow-style: none;
@@ -464,10 +468,14 @@ body::before {
     font-size: 16px;
   }
 
-  .lexcr-mobile-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+  .lexcr-hero-title {
+    font-size: clamp(1.65rem, 7.5vw, 2.25rem);
+    line-height: 1.08;
+  }
+
+  .lexcr-btn-primary,
+  .lexcr-btn-ghost {
+    width: 100%;
+    max-width: 100%;
   }
 }

@@ -12,6 +12,7 @@ import {
   deductirCredito,
 } from "@/lib/db";
 import { tieneConsultasIlimitadas } from "@/lib/planes";
+import { apiError } from "@/lib/api-response";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const RATE_LIMIT = { max: 15, windowMs: 60_000 };
@@ -23,7 +24,7 @@ export async function POST(req: NextRequest) {
   const { allowed, remaining, resetIn } = checkRateLimit(ip, "chat", RATE_LIMIT.max, RATE_LIMIT.windowMs);
   if (!allowed) {
     return NextResponse.json(
-      { error: `Demasiadas consultas. Esperá ${Math.ceil(resetIn / 1000)} segundos.` },
+      { ok: false, error: `Demasiadas consultas. Esperá ${Math.ceil(resetIn / 1000)} segundos.` },
       { status: 429, headers: { "Retry-After": String(Math.ceil(resetIn / 1000)), "X-RateLimit-Remaining": "0" } }
     );
   }
@@ -31,10 +32,10 @@ export async function POST(req: NextRequest) {
   // 2. Validar input
   let body: unknown;
   try { body = await req.json(); } catch {
-    return NextResponse.json({ error: "JSON inválido." }, { status: 400 });
+    return apiError("JSON inválido.", 400);
   }
   const validacion = validarMensajeChat(body);
-  if (!validacion.valido) return NextResponse.json({ error: validacion.error }, { status: 400 });
+  if (!validacion.valido) return apiError(validacion.error, 400);
 
   // 3. Plan enforcement
   const session = await auth();
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             error: "No tenés créditos disponibles.",
+            ok: false,
             code: "sin_creditos",
             plan: "individual",
           },
@@ -61,6 +63,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(
           {
             error: `Alcanzaste el límite de ${LIMITE_GRATIS_MES} consultas gratuitas este mes.`,
+            ok: false,
             code: "plan_limit",
             plan: "gratis",
           },
@@ -115,11 +118,11 @@ Cuando se te proporcionen artículos de legislación, úsalos como base principa
     }
 
     return NextResponse.json(
-      { respuesta },
+      { ok: true, respuesta },
       { headers: { "X-RateLimit-Remaining": String(remaining) } }
     );
   } catch (err) {
     console.error("chat error:", err);
-    return NextResponse.json({ error: "Error al procesar la consulta." }, { status: 500 });
+    return apiError("Error al procesar la consulta.", 500);
   }
 }

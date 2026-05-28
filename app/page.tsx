@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import AreasLegales from "@/components/AreasLegales";
 import dynamic from "next/dynamic";
 
 const Documentos = dynamic(() => import("@/components/Documentos"));
@@ -18,9 +17,8 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="bg-black">
         <Hero />
-        <AreasLegales />
         <Suspense fallback={<SectionSkeleton />}>
           <Documentos />
         </Suspense>

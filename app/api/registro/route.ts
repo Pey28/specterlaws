@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import bcrypt from "bcryptjs";
 import { getUserByEmail, createUser } from "@/lib/db";
+import { apiError, apiOk } from "@/lib/api-response";
 
 const PROVINCIAS = [
   "San José",
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Solicitud inválida." }, { status: 400 });
+    return apiError("Solicitud inválida.", 400);
   }
 
   const { nombre, email, password, provincia } = body as Record<string, unknown>;
@@ -27,11 +28,11 @@ export async function POST(req: NextRequest) {
     nombre.trim().length < 2 ||
     nombre.trim().length > 100
   ) {
-    return NextResponse.json({ error: "Nombre inválido." }, { status: 400 });
+    return apiError("Nombre inválido.", 400);
   }
 
   if (typeof email !== "string" || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return NextResponse.json({ error: "Correo electrónico inválido." }, { status: 400 });
+    return apiError("Correo electrónico inválido.", 400);
   }
 
   if (
@@ -39,31 +40,29 @@ export async function POST(req: NextRequest) {
     password.length < 8 ||
     password.length > 128
   ) {
-    return NextResponse.json(
-      { error: "La contraseña debe tener al menos 8 caracteres." },
-      { status: 400 }
-    );
+    return apiError("La contraseña debe tener al menos 8 caracteres.", 400);
   }
 
   if (typeof provincia !== "string" || !PROVINCIAS.includes(provincia)) {
-    return NextResponse.json({ error: "Provincia inválida." }, { status: 400 });
+    return apiError("Provincia inválida.", 400);
   }
 
   const existing = getUserByEmail(email.toLowerCase());
   if (existing) {
-    return NextResponse.json(
-      { error: "Ya existe una cuenta con ese correo electrónico." },
-      { status: 409 }
-    );
+    return apiError("Ya existe una cuenta con ese correo electrónico.", 409);
   }
 
-  const hashed = await bcrypt.hash(password, 12);
-  createUser({
-    nombre: nombre.trim(),
-    email: email.toLowerCase(),
-    password: hashed,
-    provincia,
-  });
-
-  return NextResponse.json({ ok: true }, { status: 201 });
+  try {
+    const hashed = await bcrypt.hash(password, 12);
+    createUser({
+      nombre: nombre.trim(),
+      email: email.toLowerCase(),
+      password: hashed,
+      provincia,
+    });
+    return apiOk(undefined, { status: 201 });
+  } catch (error) {
+    console.error("registro error:", error);
+    return apiError("No se pudo crear la cuenta.", 500);
+  }
 }

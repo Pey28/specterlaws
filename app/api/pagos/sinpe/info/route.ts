@@ -1,18 +1,24 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { getPagoSinpe } from "@/lib/db";
 import { getPlanLabel } from "@/lib/planes";
+import { apiError, apiOk } from "@/lib/api-response";
 
 export async function GET(req: NextRequest) {
   const id = req.nextUrl.searchParams.get("id");
-  if (!id) return NextResponse.json({ error: "ID requerido." }, { status: 400 });
+  if (!id) return apiError("ID requerido.", 400);
 
-  const pago = getPagoSinpe(id);
-  if (!pago) return NextResponse.json({ error: "Pago no encontrado." }, { status: 404 });
+  try {
+    const pago = getPagoSinpe(id);
+    if (!pago) return apiError("Pago no encontrado.", 404);
 
-  return NextResponse.json({
-    referencia: pago.referencia_sinpe,
-    monto: pago.monto,
-    planNombre: getPlanLabel(pago.plan as never),
-    estado: pago.estado,
-  });
+    return apiOk({
+      referencia: pago.referencia_sinpe,
+      monto: pago.monto,
+      planNombre: getPlanLabel(pago.plan as never),
+      estado: pago.estado,
+    });
+  } catch (error) {
+    console.error("sinpe info error:", error);
+    return apiError("No se pudo obtener el pago.", 500);
+  }
 }
