@@ -1,3 +1,4 @@
+import HoverSurface from "@/components/ui/HoverSurface";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const stats = [
@@ -54,10 +55,10 @@ export default function Confianza() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.08]">
             {stats.map((s, i) => (
               <ScrollReveal key={s.label} delay={i * 60}>
-                <div className="bg-black p-8 sm:p-10">
+                <HoverSurface className="bg-black p-8 sm:p-10 h-full">
                   <div className="hv-stat-number mb-2">{s.value}</div>
                   <div className="text-xs sm:text-sm text-white/35 leading-snug">{s.label}</div>
-                </div>
+                </HoverSurface>
               </ScrollReveal>
             ))}
           </div>
@@ -77,13 +78,13 @@ export default function Confianza() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.08]">
             {testimonios.map((t, i) => (
               <ScrollReveal key={t.autor} delay={i * 100}>
-                <div className="bg-black p-8 sm:p-10 flex flex-col justify-between min-h-[220px]">
+                <HoverSurface className="bg-black p-8 sm:p-10 flex flex-col justify-between min-h-[220px] h-full">
                   <p className="hv-quote mb-8">&ldquo;{t.cita}&rdquo;</p>
                   <div>
                     <div className="text-sm font-medium text-white">{t.autor}</div>
                     <div className="hv-section-label mt-1">{t.contexto}</div>
                   </div>
-                </div>
+                </HoverSurface>
               </ScrollReveal>
             ))}
           </div>
@@ -99,10 +100,10 @@ export default function Confianza() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/[0.08]">
             {razones.map((r, i) => (
               <ScrollReveal key={r.titulo} delay={i * 60}>
-                <div className="bg-black p-8 sm:p-10">
+                <HoverSurface className="bg-black p-8 sm:p-10 h-full">
                   <h3 className="text-lg font-bold text-white mb-3 tracking-tight">{r.titulo}</h3>
                   <p className="text-sm text-white/40 leading-relaxed">{r.desc}</p>
-                </div>
+                </HoverSurface>
               </ScrollReveal>
             ))}
           </div>

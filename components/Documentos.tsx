@@ -13,6 +13,7 @@ import {
   Search,
   ArrowRight,
 } from "lucide-react";
+import HoverSurface from "@/components/ui/HoverSurface";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 type Categoria = "Todos" | "Laboral" | "Civil" | "Consumidor";
@@ -166,26 +167,26 @@ export default function Documentos() {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.06]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               {filtrados.map((doc, i) => {
                 const Icon = doc.icono;
                 return (
                   <ScrollReveal key={doc.titulo} delay={i * 40}>
-                    <div className="group relative bg-black p-6 sm:p-7 flex flex-col h-full hover:bg-white/[0.025] transition-colors">
+                    <HoverSurface className="group relative bg-[#1c1c1c] border border-[#2a2a2a] rounded-xl p-6 sm:p-7 flex flex-col h-full hover:bg-[#222222]">
                       {/* Popular badge */}
                       {doc.popular && (
-                        <span className="absolute top-5 right-5 text-[10px] font-medium text-white/35 border border-white/12 rounded-full px-2 py-0.5 tracking-wide">
+                        <span className="absolute top-5 right-5 text-[10px] font-medium text-white/35 border border-white/15 rounded-full px-2 py-0.5 tracking-wide">
                           Popular
                         </span>
                       )}
 
                       {/* Icon */}
-                      <div className="w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center mb-5 group-hover:border-white/22 transition-colors">
-                        <Icon className="w-5 h-5 text-white/55 group-hover:text-white/80 transition-colors" strokeWidth={1.5} />
+                      <div className="w-10 h-10 rounded-lg border border-white/12 bg-white/4 flex items-center justify-center mb-5 group-hover:border-white/25 group-hover:bg-white/8 transition-all duration-200">
+                        <Icon className="w-5 h-5 text-white/65 group-hover:text-white/90 transition-colors duration-200" strokeWidth={1.5} />
                       </div>
 
                       {/* Category */}
-                      <span className="hv-section-label mb-2">{doc.categoria}</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-white/40 mb-2">{doc.categoria}</span>
 
                       {/* Title */}
                       <h3 className="text-base font-semibold text-white mb-2 leading-snug tracking-tight">
@@ -193,19 +194,19 @@ export default function Documentos() {
                       </h3>
 
                       {/* Description */}
-                      <p className="text-sm text-white/40 leading-relaxed flex-1 mb-6">
+                      <p className="text-sm text-white/55 leading-relaxed flex-1 mb-6">
                         {doc.descripcion}
                       </p>
 
                       {/* CTA */}
                       <a
                         href="/chat"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-white/40 hover:text-white transition-colors group/btn"
+                        className="inline-flex items-center gap-2 text-sm font-medium text-white/50 hover:text-white transition-colors group/btn"
                       >
                         Generar documento
                         <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" strokeWidth={1.5} />
                       </a>
-                    </div>
+                    </HoverSurface>
                   </ScrollReveal>
                 );
               })}

@@ -47,9 +47,7 @@ export default function HeroVideoPreview() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <span className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-white text-black font-semibold text-sm">
-              Consultar Ahora — Es Gratis
-            </span>
+            <span className="lexcr-btn-hero-cta">Consultar Ahora — Es Gratis</span>
             <span className="inline-flex items-center justify-center h-12 px-8 rounded-full border border-white/20 text-white/70 font-medium text-sm">
               Ver áreas legales
             </span>

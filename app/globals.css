@@ -233,6 +233,54 @@ body::before {
   animation: lexcr-pulse-ring 2.5s ease-in-out infinite;
 }
 
+/* Hero CTA — acento azul de marca con brillo suave */
+.lexcr-btn-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #f4f8ff;
+  border-radius: 9999px;
+  border: 1px solid rgba(111, 143, 190, 0.55);
+  background: linear-gradient(
+    135deg,
+    #3d5f94 0%,
+    var(--cr-blue) 42%,
+    var(--cr-blue-light) 100%
+  );
+  box-shadow:
+    0 0 0 1px rgba(74, 111, 174, 0.3),
+    0 6px 28px rgba(74, 111, 174, 0.42),
+    0 0 36px rgba(79, 111, 168, 0.32);
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  animation: lexcr-hero-cta-glow 2.8s ease-in-out infinite;
+}
+
+.lexcr-btn-hero-cta:hover {
+  background: linear-gradient(135deg, #4a6fae 0%, #5f84b8 45%, #89a8d4 100%);
+  border-color: rgba(137, 168, 212, 0.7);
+  transform: translateY(-1px);
+}
+
+@keyframes lexcr-hero-cta-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(74, 111, 174, 0.28),
+      0 4px 22px rgba(74, 111, 174, 0.38),
+      0 0 28px rgba(79, 111, 168, 0.28);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(111, 143, 190, 0.45),
+      0 8px 32px rgba(74, 111, 174, 0.52),
+      0 0 44px rgba(111, 143, 190, 0.42);
+  }
+}
+
 .lexcr-caret {
   display: inline-block;
   width: 2px;
@@ -400,6 +448,15 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   body::before,
   .lexcr-pulse,
+  .lexcr-btn-hero-cta,
+  .lexcr-hover-surface:hover {
+    transform: none !important;
+  }
+
+  .lexcr-hover-surface::before {
+    opacity: 0 !important;
+  }
+
   .lexcr-step-icon,
   .lexcr-marquee-track,
   .lexcr-animate-in,
@@ -498,6 +555,53 @@ body::before {
 
 .hv-card:hover {
   border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Contenedor interactivo: brillo que sigue el cursor */
+.lexcr-hover-surface {
+  position: relative;
+  overflow: hidden;
+  border-radius: inherit;
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.lexcr-hover-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    480px circle at var(--hover-x, 50%) var(--hover-y, 50%),
+    rgba(111, 143, 190, 0.2) 0%,
+    rgba(74, 111, 174, 0.08) 38%,
+    transparent 58%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lexcr-hover-surface:hover {
+  transform: translateY(-3px);
+  border-color: rgba(111, 143, 190, 0.32) !important;
+  box-shadow:
+    0 14px 44px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(74, 111, 174, 0.22),
+    0 0 36px rgba(74, 111, 174, 0.14);
+}
+
+.lexcr-hover-surface:hover::before {
+  opacity: 1;
+}
+
+.lexcr-hover-surface > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hv-quote {

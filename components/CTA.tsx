@@ -1,5 +1,6 @@
 "use client";
 
+import HoverSurface from "@/components/ui/HoverSurface";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export default function CTA() {
@@ -21,7 +22,7 @@ export default function CTA() {
         </ScrollReveal>
 
         <ScrollReveal delay={80}>
-          <div className="border border-white/10 rounded-2xl p-6 sm:p-8 mb-8 max-w-2xl hv-card">
+          <HoverSurface className="border border-white/10 rounded-2xl p-6 sm:p-8 mb-8 max-w-2xl hv-card bg-black/40">
             <p className="text-xs text-white/25 uppercase tracking-wider mb-3">Tu consulta</p>
             <p className="text-white/60 text-base sm:text-lg leading-relaxed italic">
               &ldquo;Mi jefe me despidió sin darme preaviso ni pagarme el aguinaldo...&rdquo;
@@ -35,7 +36,7 @@ export default function CTA() {
                 Consultar →
               </a>
             </div>
-          </div>
+          </HoverSurface>
         </ScrollReveal>
 
         <ScrollReveal delay={160}>

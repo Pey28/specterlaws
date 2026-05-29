@@ -39,10 +39,7 @@ export default function Hero() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lexcr-animate-in" style={{ animationDelay: "120ms" }}>
-          <a
-            href="/chat"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-full bg-white text-black font-semibold text-sm hover:bg-white/90 transition-colors"
-          >
+          <a href="/chat" className="lexcr-btn-hero-cta">
             Consultar Ahora — Es Gratis
           </a>
           <a

@@ -127,7 +127,7 @@ export default function Navbar() {
               <div className="flex items-center shrink-0 pl-2">
                 <Link
                   href="/chat"
-                  className={`lexcr-btn-primary lexcr-btn-future ${!autenticado ? "lexcr-pulse" : ""} text-sm !min-h-[40px] !py-2 !px-5 !w-auto`}
+                  className="lexcr-btn-hero-cta text-sm !min-h-[40px] !py-2 !px-5 !w-auto"
                 >
                   {autenticado ? "Consultar" : "Consulta Gratis"}
                 </Link>
@@ -146,7 +146,7 @@ export default function Navbar() {
             <div className="flex items-center gap-1.5 shrink-0">
               <Link
                 href="/chat"
-                className="lexcr-btn-primary lexcr-btn-future text-xs sm:text-sm !min-h-[44px] !py-2 !px-3 sm:!px-4 !w-auto whitespace-nowrap"
+                className="lexcr-btn-hero-cta text-xs sm:text-sm !min-h-[40px] sm:!min-h-[44px] !py-2 !px-3 sm:!px-4 !w-auto whitespace-nowrap"
               >
                 <span className="hidden min-[400px]:inline">Consulta </span>Gratis
               </Link>
@@ -248,7 +248,7 @@ export default function Navbar() {
               <Link
                 href="/chat"
                 onClick={() => setMenuOpen(false)}
-                className="lexcr-btn-primary lexcr-btn-future lexcr-pulse text-center mt-4 !w-full"
+                className="lexcr-btn-hero-cta text-center mt-4 !w-full"
               >
                 {autenticado ? "Consultar ahora" : "Consulta Gratis"}
               </Link>

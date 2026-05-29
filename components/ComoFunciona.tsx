@@ -1,3 +1,4 @@
+import HoverSurface from "@/components/ui/HoverSurface";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const pasos = [
@@ -33,7 +34,7 @@ export default function ComoFunciona() {
         <div className="space-y-0">
           {pasos.map((paso, i) => (
             <ScrollReveal key={paso.numero} delay={i * 100}>
-              <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 md:gap-16 py-10 sm:py-12 border-t border-white/[0.08] group">
+              <HoverSurface className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 md:gap-16 py-10 sm:py-12 border-t border-white/[0.08] group rounded-2xl px-4 -mx-4 sm:px-6 sm:-mx-6">
                 <div>
                   <span className="text-[4rem] sm:text-[5rem] font-bold text-white/08 leading-none tracking-tighter">
                     {paso.numero}
@@ -47,7 +48,7 @@ export default function ComoFunciona() {
                     {paso.descripcion}
                   </p>
                 </div>
-              </div>
+              </HoverSurface>
             </ScrollReveal>
           ))}
         </div>
