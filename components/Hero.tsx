@@ -35,7 +35,7 @@ export default function Hero() {
         <p className="text-base sm:text-xl text-white/45 max-w-2xl mb-10 sm:mb-14 leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.9)]">
           Inteligencia artificial entrenada con la legislación costarricense.
           Consulta sobre derecho laboral, civil, penal y del consumidor —
-          en segundos, en español.
+          en segundos.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lexcr-animate-in" style={{ animationDelay: "120ms" }}>

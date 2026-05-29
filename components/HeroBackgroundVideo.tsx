@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 
-/** Abogado explicando a cliente con laptop (Mixkit #16106) */
-const VIDEO_SRC = "/hero/justice-bg.mp4?v=5";
+/** Abogados con cliente en reunión de oficina (Mixkit #15858) */
+const VIDEO_SRC = "/hero/justice-bg.mp4?v=7";
 
 export default function HeroBackgroundVideo() {
   const [failed, setFailed] = useState(false);
