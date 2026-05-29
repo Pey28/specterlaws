@@ -8,6 +8,8 @@ import BuscarLeyesModal from "./BuscarLeyesModal";
 import SubirArchivosModal from "./SubirArchivosModal";
 import ExpedientePanel from "./ExpedientePanel";
 import AbogadoModal from "./AbogadoModal";
+import MarkdownRenderer from "./MarkdownRenderer";
+import ArtifactPanel from "./ArtifactPanel";
 import type { Archivo, Mensaje, Conversacion } from "./types";
 
 const LIMITE_GRATIS = 3;
@@ -15,46 +17,52 @@ const KEY_CONSULTAS = "crlexai-consultas-libres";
 
 type ModalActivo = "buscar" | "subir" | "expediente" | "limite" | "abogado" | "plan_limit" | null;
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+type Artifact = { titulo: string; contenido: string };
 
+// ─── Detect artifact (legal document in response) ─────────────────────────────
+const DOC_PATTERNS = [
+  /\b(CARTA DE RENUNCIA|CONTRATO DE|DENUNCIA (ANTE|POR)|QUEJA (ANTE|FORMAL)|SOLICITUD DE|PODER (ESPECIAL|GENERAL))\b/i,
+  /\bESTIMADO[S]?\s+(SEÑOR|SEÑORA|SR\.|SRA\.)/i,
+  /\bYO,\s+[A-ZÁÉÍÓÚÑ\s]+,\s+(mayor de edad|portador|vecino)/i,
+  /\b(Fecha:|Lugar y Fecha:|San José,|Ciudad:|A quien corresponda)/i,
+];
+
+function detectarArtefacto(contenido: string): Artifact | null {
+  if (contenido.length < 300) return null;
+  const match = DOC_PATTERNS.some((r) => r.test(contenido));
+  if (!match) return null;
+  // Extract title from first meaningful line
+  const lines = contenido.split("\n").map((l) => l.trim()).filter(Boolean);
+  const titulo = lines.find((l) => l.length > 5 && l.length < 80 && l === l.toUpperCase())
+    ?? lines[0]?.slice(0, 60)
+    ?? "Documento Legal";
+  return { titulo, contenido };
+}
+
+// ─── Group history by date ────────────────────────────────────────────────────
 function agruparPorFecha(convs: Conversacion[]) {
-  const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
   const ayer = new Date(hoy); ayer.setDate(hoy.getDate() - 1);
   const semana = new Date(hoy); semana.setDate(hoy.getDate() - 7);
-
-  const grupos: { label: string; items: Conversacion[] }[] = [
-    { label: "Hoy", items: [] },
-    { label: "Ayer", items: [] },
-    { label: "Últimos 7 días", items: [] },
-    { label: "Anteriores", items: [] },
+  const grupos = [
+    { label: "Hoy", items: [] as Conversacion[] },
+    { label: "Ayer", items: [] as Conversacion[] },
+    { label: "Últimos 7 días", items: [] as Conversacion[] },
+    { label: "Anteriores", items: [] as Conversacion[] },
   ];
-
   for (const c of convs) {
-    const d = new Date(c.fechaCreacion);
-    d.setHours(0, 0, 0, 0);
+    const d = new Date(c.fechaCreacion); d.setHours(0, 0, 0, 0);
     if (d >= hoy) grupos[0].items.push(c);
     else if (d >= ayer) grupos[1].items.push(c);
     else if (d >= semana) grupos[2].items.push(c);
     else grupos[3].items.push(c);
   }
-
   return grupos.filter((g) => g.items.length > 0);
 }
 
-function titleFromConv(conv: Conversacion) {
-  return conv.preview.length > 45 ? conv.preview.slice(0, 42) + "…" : conv.preview;
-}
-
 // ─── Sidebar ──────────────────────────────────────────────────────────────────
-
 function Sidebar({
-  historial,
-  convActualId,
-  onNuevo,
-  onCargar,
-  onCerrar,
-  open,
+  historial, convActualId, onNuevo, onCargar, onCerrar, open, session,
 }: {
   historial: Conversacion[];
   convActualId: string;
@@ -62,118 +70,90 @@ function Sidebar({
   onCargar: (c: Conversacion) => void;
   onCerrar: () => void;
   open: boolean;
+  session: ReturnType<typeof useSession>["data"];
 }) {
-  const { data: session } = useSession();
   const grupos = useMemo(() => agruparPorFecha(historial), [historial]);
 
   return (
     <>
-      {/* Mobile backdrop */}
       {open && (
-        <button
-          type="button"
-          className="md:hidden fixed inset-0 z-30 bg-black/60"
-          aria-label="Cerrar sidebar"
-          onClick={onCerrar}
-        />
+        <button type="button" className="md:hidden fixed inset-0 z-30 bg-black/70"
+          aria-label="Cerrar" onClick={onCerrar} />
       )}
-
-      <aside
-        className={`
-          fixed md:relative inset-y-0 left-0 z-40 md:z-auto
-          flex flex-col bg-[#0f0f0f] border-r border-white/[0.08]
-          transition-transform duration-300 md:translate-x-0
-          w-64 shrink-0
-          ${open ? "translate-x-0" : "-translate-x-full"}
-        `}
-      >
-        {/* Top */}
-        <div className="flex items-center justify-between px-3 py-3 shrink-0">
-          <Link href="/" className="flex items-center gap-2 px-1 hover:opacity-80 transition-opacity">
+      <aside className={`
+        fixed md:relative inset-y-0 left-0 z-40 md:z-auto
+        flex flex-col w-60 shrink-0
+        bg-[#111111] border-r border-[#252525]
+        transition-transform duration-300 md:translate-x-0
+        ${open ? "translate-x-0" : "-translate-x-full"}
+      `}>
+        {/* Logo + close */}
+        <div className="flex items-center justify-between px-3 pt-3 pb-2 shrink-0">
+          <Link href="/" className="hover:opacity-75 transition-opacity">
             <img src="/logo-unificado.jpg" alt="Specterlaws" className="h-7 w-auto object-contain" />
           </Link>
-          <button
-            onClick={onCerrar}
-            className="md:hidden p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/8 transition-colors"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button onClick={onCerrar}
+            className="md:hidden p-1.5 rounded-lg text-white/30 hover:text-white hover:bg-white/8 transition-colors">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
         {/* New chat */}
-        <div className="px-3 pb-2 shrink-0">
-          <button
-            onClick={onNuevo}
-            className="w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm text-white/70 hover:text-white hover:bg-white/8 transition-colors border border-white/10 hover:border-white/20"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+        <div className="px-2 pb-2 shrink-0">
+          <button onClick={onNuevo}
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/8 transition-colors border border-[#2a2a2a] hover:border-[#383838]">
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
             Nueva consulta
           </button>
         </div>
 
         {/* History */}
-        <div className="flex-1 overflow-y-auto px-2 py-1 space-y-4">
+        <div className="flex-1 overflow-y-auto px-2 py-1">
           {grupos.length === 0 ? (
-            <p className="text-xs text-white/25 px-3 py-4 text-center">Sin conversaciones</p>
-          ) : (
-            grupos.map((grupo) => (
-              <div key={grupo.label}>
-                <p className="text-[11px] font-semibold text-white/25 uppercase tracking-wider px-3 mb-1">
-                  {grupo.label}
-                </p>
-                <div className="space-y-0.5">
-                  {grupo.items.map((conv) => (
-                    <button
-                      key={conv.id}
-                      onClick={() => { onCargar(conv); onCerrar(); }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors truncate ${
-                        conv.id === convActualId
-                          ? "bg-white/10 text-white"
-                          : "text-white/55 hover:text-white hover:bg-white/6"
-                      }`}
-                    >
-                      {titleFromConv(conv)}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ))
-          )}
+            <p className="text-[11px] text-white/20 text-center py-6 px-3">Sin conversaciones guardadas</p>
+          ) : grupos.map((g) => (
+            <div key={g.label} className="mb-3">
+              <p className="text-[10px] font-semibold text-white/20 uppercase tracking-widest px-2 mb-1">{g.label}</p>
+              {g.items.map((conv) => (
+                <button key={conv.id} onClick={() => { onCargar(conv); onCerrar(); }}
+                  className={`w-full text-left px-2 py-1.5 rounded-lg text-[13px] truncate transition-colors ${
+                    conv.id === convActualId
+                      ? "bg-[#2a2a2a] text-white"
+                      : "text-white/45 hover:text-white/80 hover:bg-white/5"
+                  }`}>
+                  {conv.preview.length > 42 ? conv.preview.slice(0, 39) + "…" : conv.preview}
+                </button>
+              ))}
+            </div>
+          ))}
         </div>
 
         {/* User */}
-        <div className="border-t border-white/[0.08] px-3 py-3 shrink-0">
+        <div className="border-t border-[#252525] px-3 py-3 shrink-0">
           {session?.user ? (
             <div className="flex items-center gap-2.5">
-              <div className="w-7 h-7 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-xs font-bold text-white shrink-0">
+              <div className="w-6 h-6 rounded-full bg-[#2a2a2a] border border-[#383838] flex items-center justify-center text-[11px] font-bold text-white/70 shrink-0">
                 {session.user.name?.charAt(0).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-white truncate">{session.user.name?.split(" ")[0]}</p>
-                <p className="text-[11px] text-white/35 capitalize truncate">{session.user.plan ?? "gratis"}</p>
+                <p className="text-[12px] font-medium text-white/70 truncate">{session.user.name?.split(" ")[0]}</p>
+                <p className="text-[10px] text-white/30 capitalize">{(session.user as { plan?: string }).plan ?? "gratis"}</p>
               </div>
-              <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="text-white/30 hover:text-white/70 transition-colors p-1"
-                title="Salir"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button onClick={() => signOut({ callbackUrl: "/" })} title="Salir"
+                className="text-white/25 hover:text-white/60 transition-colors p-1">
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                 </svg>
               </button>
             </div>
           ) : (
             <div className="flex gap-2">
-              <Link href="/login" className="flex-1 text-center text-xs py-2 rounded-lg border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-colors">
-                Iniciar sesión
-              </Link>
-              <Link href="/registro" className="flex-1 text-center text-xs py-2 rounded-lg bg-white text-black font-semibold hover:bg-white/90 transition-colors">
-                Registrarse
-              </Link>
+              <Link href="/login" className="flex-1 text-center text-[12px] py-1.5 rounded-lg border border-[#2a2a2a] text-white/50 hover:text-white hover:border-[#383838] transition-colors">Iniciar sesión</Link>
+              <Link href="/registro" className="flex-1 text-center text-[12px] py-1.5 rounded-lg bg-white text-black font-medium hover:bg-white/90 transition-colors">Registrarse</Link>
             </div>
           )}
         </div>
@@ -182,52 +162,11 @@ function Sidebar({
   );
 }
 
-// ─── Message bubble ───────────────────────────────────────────────────────────
-
-function MessageBubble({ msg, onAbogado }: { msg: Mensaje; onAbogado: () => void }) {
-  const isUser = msg.role === "user";
-
-  if (isUser) {
-    return (
-      <div className="flex justify-end">
-        <div className="max-w-[75%] sm:max-w-[65%] bg-[#2a2a2a] rounded-2xl rounded-br-sm px-4 py-3 text-sm text-white/90 leading-relaxed whitespace-pre-wrap break-words">
-          {msg.content}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex gap-3">
-      {/* Avatar */}
-      <div className="w-8 h-8 rounded-full bg-[#1a1a2e] border border-white/10 flex items-center justify-center text-base flex-shrink-0 mt-1" aria-hidden="true">
-        ⚖
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-xs text-white/30 font-medium mb-2">Specterlaws</p>
-        <div className="text-sm text-white/85 leading-relaxed whitespace-pre-wrap break-words">
-          {msg.content}
-        </div>
-        <button
-          onClick={onAbogado}
-          className="mt-3 inline-flex items-center gap-1.5 text-xs text-white/35 hover:text-white/70 transition-colors"
-        >
-          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          Hablar con un abogado
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ─── Main component ───────────────────────────────────────────────────────────
-
+// ─── Main ─────────────────────────────────────────────────────────────────────
 export default function ChatInterface() {
   const { data: session } = useSession();
   const autenticado = !!session?.user;
-  const plan = session?.user?.plan ?? "gratis";
+  const plan = (session?.user as { plan?: string })?.plan ?? "gratis";
 
   const [mensajes, setMensajes] = useState<Mensaje[]>([]);
   const [inputTexto, setInputTexto] = useState("");
@@ -237,6 +176,7 @@ export default function ChatInterface() {
   const [modalActivo, setModalActivo] = useState<ModalActivo>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [consultasLibres, setConsultasLibres] = useState(0);
+  const [artifact, setArtifact] = useState<Artifact | null>(null);
 
   const convIdRef = useRef(Date.now().toString());
   const chatEndRef = useRef<HTMLDivElement>(null);
@@ -244,10 +184,8 @@ export default function ChatInterface() {
 
   useEffect(() => {
     if (!autenticado) {
-      try {
-        const stored = localStorage.getItem(KEY_CONSULTAS);
-        setConsultasLibres(stored ? parseInt(stored, 10) : 0);
-      } catch { /* ignore */ }
+      try { setConsultasLibres(parseInt(localStorage.getItem(KEY_CONSULTAS) ?? "0", 10)); }
+      catch { /* ignore */ }
     }
   }, [autenticado]);
 
@@ -258,16 +196,17 @@ export default function ChatInterface() {
     } catch { /* ignore */ }
   }, []);
 
+  // Auto-scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [mensajes, cargando]);
 
+  // Save history
   useEffect(() => {
-    if (mensajes.length === 0) return;
+    if (!mensajes.length) return;
     try {
       const conv: Conversacion = {
-        id: convIdRef.current,
-        mensajes,
+        id: convIdRef.current, mensajes,
         fechaCreacion: mensajes[0].timestamp,
         preview: mensajes[0].content.slice(0, 100),
       };
@@ -284,230 +223,195 @@ export default function ChatInterface() {
     const ta = textareaRef.current;
     if (!ta) return;
     ta.style.height = "auto";
-    ta.style.height = Math.min(ta.scrollHeight, 200) + "px";
+    ta.style.height = Math.min(ta.scrollHeight, 180) + "px";
   }, [inputTexto]);
 
-  const enviarMensaje = useCallback(
-    async (textoForzado?: string) => {
-      const contenido = textoForzado ?? inputTexto.trim();
-      if (!contenido || cargando) return;
+  const enviarMensaje = useCallback(async (textoForzado?: string) => {
+    const contenido = textoForzado ?? inputTexto.trim();
+    if (!contenido || cargando) return;
+
+    if (!autenticado) {
+      const count = (() => { try { return parseInt(localStorage.getItem(KEY_CONSULTAS) ?? "0", 10); } catch { return 0; } })();
+      if (count >= LIMITE_GRATIS) { setModalActivo("limite"); return; }
+    }
+
+    const nuevoMensaje: Mensaje = { id: Date.now().toString(), role: "user", content: contenido, timestamp: new Date().toISOString() };
+    setMensajes((prev) => [...prev, nuevoMensaje]);
+    setInputTexto("");
+    setCargando(true);
+    setArtifact(null);
+
+    try {
+      const historialAPI = [...mensajes, nuevoMensaje].map((m) => ({ role: m.role, content: m.content }));
+      const contextoArchivos = archivos.length > 0
+        ? archivos.map((a) => `Archivo: ${a.nombre} (${a.tipo})${a.contenido ? `\n${a.contenido.slice(0, 500)}` : ""}`).join("\n\n")
+        : "";
+
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensajes: historialAPI, contextoArchivos }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 402) {
+        setMensajes((prev) => prev.slice(0, -1));
+        setInputTexto(contenido);
+        setModalActivo(data.code === "sin_creditos" ? "plan_limit" : "plan_limit");
+        return;
+      }
+      if (res.status === 429) throw new Error(data.error ?? "Demasiadas consultas. Esperá un momento.");
+      if (data.error) throw new Error(data.error);
+
+      const respuesta = data.respuesta as string;
+      setMensajes((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: respuesta, timestamp: new Date().toISOString() }]);
+
+      // Detect artifact
+      const art = detectarArtefacto(respuesta);
+      if (art) setArtifact(art);
 
       if (!autenticado) {
-        const count = (() => {
-          try { return parseInt(localStorage.getItem(KEY_CONSULTAS) ?? "0", 10); }
-          catch { return 0; }
-        })();
-        if (count >= LIMITE_GRATIS) { setModalActivo("limite"); return; }
+        try {
+          const newCount = consultasLibres + 1;
+          localStorage.setItem(KEY_CONSULTAS, String(newCount));
+          setConsultasLibres(newCount);
+        } catch { /* ignore */ }
       }
-
-      const nuevoMensaje: Mensaje = {
-        id: Date.now().toString(),
-        role: "user",
-        content: contenido,
-        timestamp: new Date().toISOString(),
-      };
-
-      setMensajes((prev) => [...prev, nuevoMensaje]);
-      setInputTexto("");
-      setCargando(true);
-
-      try {
-        const historialAPI = [...mensajes, nuevoMensaje].map((m) => ({ role: m.role, content: m.content }));
-        const contextoArchivos = archivos.length > 0
-          ? archivos.map((a) => `Archivo: ${a.nombre} (${a.tipo})${a.contenido ? `\n${a.contenido.slice(0, 500)}` : ""}`).join("\n\n")
-          : "";
-
-        const res = await fetch("/api/chat", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ mensajes: historialAPI, contextoArchivos }),
-        });
-
-        const data = await res.json();
-
-        if (res.status === 402) {
-          setMensajes((prev) => prev.slice(0, -1));
-          setInputTexto(contenido);
-          setModalActivo("plan_limit");
-          return;
-        }
-
-        if (res.status === 429) throw new Error(data.error ?? "Demasiadas consultas. Esperá un momento.");
-        if (data.error) throw new Error(data.error);
-
-        setMensajes((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: data.respuesta,
-            timestamp: new Date().toISOString(),
-          },
-        ]);
-
-        if (!autenticado) {
-          try {
-            const newCount = consultasLibres + 1;
-            localStorage.setItem(KEY_CONSULTAS, String(newCount));
-            setConsultasLibres(newCount);
-          } catch { /* ignore */ }
-        }
-      } catch (err) {
-        setMensajes((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            role: "assistant",
-            content: err instanceof Error ? err.message : "Hubo un error al procesar tu consulta.",
-            timestamp: new Date().toISOString(),
-          },
-        ]);
-      } finally {
-        setCargando(false);
-        textareaRef.current?.focus();
-      }
-    },
-    [inputTexto, mensajes, archivos, cargando, autenticado, consultasLibres]
-  );
+    } catch (err) {
+      setMensajes((prev) => [...prev, { id: (Date.now() + 1).toString(), role: "assistant", content: err instanceof Error ? err.message : "Error al procesar la consulta.", timestamp: new Date().toISOString() }]);
+    } finally {
+      setCargando(false);
+      textareaRef.current?.focus();
+    }
+  }, [inputTexto, mensajes, archivos, cargando, autenticado, consultasLibres]);
 
   const nuevaConversacion = useCallback(() => {
     convIdRef.current = Date.now().toString();
-    setMensajes([]);
-    setInputTexto("");
-    setSidebarOpen(false);
+    setMensajes([]); setInputTexto(""); setArtifact(null); setSidebarOpen(false);
   }, []);
 
   const cargarConversacion = useCallback((conv: Conversacion) => {
     convIdRef.current = conv.id;
-    setMensajes(conv.mensajes);
-    setSidebarOpen(false);
+    setMensajes(conv.mensajes); setArtifact(null); setSidebarOpen(false);
   }, []);
 
   const consultasRestantes = useMemo(() => LIMITE_GRATIS - consultasLibres, [consultasLibres]);
-
-  const tituloActual = useMemo(() => {
-    if (mensajes.length === 0) return null;
-    const preview = mensajes[0].content;
-    return preview.length > 50 ? preview.slice(0, 47) + "…" : preview;
+  const tituloChat = useMemo(() => {
+    if (!mensajes.length) return "Nueva consulta";
+    const t = mensajes[0].content;
+    return t.length > 52 ? t.slice(0, 49) + "…" : t;
   }, [mensajes]);
 
+  const hasArtifact = !!artifact;
+
   return (
-    <div className="flex h-[100dvh] bg-[#141414] text-white overflow-hidden">
+    <div className="flex h-[100dvh] bg-[#1a1a1a] text-white overflow-hidden">
 
       {/* Sidebar */}
       <Sidebar
-        historial={historial}
-        convActualId={convIdRef.current}
-        onNuevo={nuevaConversacion}
-        onCargar={cargarConversacion}
-        onCerrar={() => setSidebarOpen(false)}
-        open={sidebarOpen}
+        historial={historial} convActualId={convIdRef.current}
+        onNuevo={nuevaConversacion} onCargar={cargarConversacion}
+        onCerrar={() => setSidebarOpen(false)} open={sidebarOpen} session={session}
       />
 
-      {/* Main */}
-      <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
+      {/* Chat area */}
+      <div className={`flex flex-col min-w-0 overflow-hidden transition-all duration-300 ${hasArtifact ? "w-[55%]" : "flex-1"}`}>
 
         {/* Header */}
-        <header className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06] shrink-0">
-          {/* Hamburger */}
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/8 transition-colors md:hidden"
-            aria-label="Abrir menú"
-          >
+        <header className="flex items-center gap-3 px-4 py-2.5 border-b border-[#252525] shrink-0 bg-[#1a1a1a]">
+          <button onClick={() => setSidebarOpen(true)}
+            className="p-1.5 rounded-lg text-white/35 hover:text-white hover:bg-white/8 transition-colors md:hidden">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-
-          {/* Desktop: new chat icon */}
-          <button
-            onClick={nuevaConversacion}
-            className="hidden md:flex p-1.5 rounded-lg text-white/40 hover:text-white hover:bg-white/8 transition-colors"
-            aria-label="Nueva consulta"
-            title="Nueva consulta"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+          <button onClick={nuevaConversacion} title="Nueva consulta"
+            className="hidden md:flex p-1.5 rounded-lg text-white/35 hover:text-white hover:bg-white/8 transition-colors">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
             </svg>
           </button>
-
-          {/* Title */}
-          <span className="flex-1 text-sm text-white/50 truncate min-w-0">
-            {tituloActual ?? "Nueva consulta"}
-          </span>
-
-          {/* Right */}
+          <span className="flex-1 text-[13px] text-white/40 truncate">{tituloChat}</span>
           <div className="flex items-center gap-2 shrink-0">
-            {!autenticado && (
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs text-white/35">
-                  {consultasRestantes > 0 ? `${consultasRestantes} gratis` : "Sin consultas"}
-                </span>
-              </div>
+            {!autenticado && consultasRestantes > 0 && (
+              <span className="text-[11px] text-white/30">{consultasRestantes} consultas gratis</span>
             )}
             {autenticado && plan !== "gratis" && (
-              <span className="text-xs text-amber-300/70 border border-amber-400/20 px-2 py-0.5 rounded-full capitalize hidden sm:inline">
-                {plan}
-              </span>
+              <span className="text-[11px] text-white/40 border border-white/15 rounded-full px-2 py-0.5 capitalize">{plan}</span>
             )}
             {autenticado ? (
-              <Link href="/perfil" className="w-7 h-7 rounded-full bg-white/10 border border-white/15 flex items-center justify-center text-xs font-bold hover:bg-white/20 transition-colors">
-                {session.user.name?.charAt(0).toUpperCase()}
+              <Link href="/perfil" className="w-6 h-6 rounded-full bg-[#2a2a2a] border border-[#383838] flex items-center justify-center text-[11px] font-bold hover:bg-[#333] transition-colors">
+                {session?.user?.name?.charAt(0).toUpperCase()}
               </Link>
             ) : (
-              <Link href="/login" className="text-xs text-white/50 hover:text-white transition-colors">
-                Iniciar sesión
-              </Link>
+              <Link href="/login" className="text-[12px] text-white/40 hover:text-white transition-colors">Iniciar sesión</Link>
             )}
           </div>
         </header>
 
         {/* Free limit bar */}
         {!autenticado && consultasLibres > 0 && consultasLibres < LIMITE_GRATIS && (
-          <div className="px-4 py-2 border-b border-amber-500/15 bg-amber-500/5 flex items-center justify-between shrink-0">
-            <span className="text-xs text-amber-200/70">
-              Te quedan <strong>{consultasRestantes}</strong> consulta{consultasRestantes !== 1 ? "s" : ""} gratis
+          <div className="px-4 py-2 border-b border-[#252525] bg-[#1e1a14] flex items-center justify-between shrink-0">
+            <span className="text-[12px] text-amber-200/60">
+              Te quedan <strong className="text-amber-200/80">{consultasRestantes}</strong> consulta{consultasRestantes !== 1 ? "s" : ""} gratis
             </span>
-            <Link href="/registro" className="text-xs text-amber-300/80 hover:text-amber-200 underline">
-              Registrate →
-            </Link>
+            <Link href="/registro" className="text-[12px] text-amber-300/70 hover:text-amber-200 underline">Registrate →</Link>
           </div>
         )}
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto">
           {mensajes.length === 0 ? (
-            /* Empty state */
-            <div className="flex flex-col items-center justify-center h-full px-4 pb-32">
-              <div className="w-14 h-14 rounded-2xl bg-[#1a1a2e] border border-white/10 flex items-center justify-center text-3xl mb-5" aria-hidden="true">
-                ⚖️
-              </div>
-              <h1 className="text-2xl font-semibold text-white mb-2 text-center">
-                {autenticado
-                  ? `Hola, ${session.user.name?.split(" ")[0]}`
-                  : "¿En qué te puedo ayudar?"}
-              </h1>
-              <p className="text-sm text-white/40 text-center max-w-xs">
-                Soy Specterlaws, tu asistente especializado en leyes costarricenses.
+            <div className="flex flex-col items-center justify-center h-full pb-32 px-4">
+              <div className="w-12 h-12 rounded-xl bg-[#252525] border border-[#333] flex items-center justify-center text-2xl mb-4">⚖️</div>
+              <h2 className="text-xl font-semibold text-white mb-1.5">
+                {autenticado ? `Hola, ${session?.user?.name?.split(" ")[0]}` : "¿En qué te ayudo?"}
+              </h2>
+              <p className="text-sm text-white/35 text-center max-w-xs">
+                Asistente especializado en leyes de Costa Rica
               </p>
             </div>
           ) : (
-            <div className="max-w-3xl mx-auto px-4 py-8 space-y-6 pb-6">
-              {mensajes.map((msg) => (
-                <MessageBubble
-                  key={msg.id}
-                  msg={msg}
-                  onAbogado={() => setModalActivo("abogado")}
-                />
-              ))}
+            <div className="max-w-[800px] mx-auto px-4 py-6 space-y-6">
+              {mensajes.map((msg) =>
+                msg.role === "user" ? (
+                  // User bubble — right
+                  <div key={msg.id} className="flex justify-end">
+                    <div className="max-w-[72%] bg-[#2d2d2d] rounded-2xl rounded-br-sm px-4 py-2.5 text-[14px] text-white/90 leading-relaxed whitespace-pre-wrap break-words">
+                      {msg.content}
+                    </div>
+                  </div>
+                ) : (
+                  // Assistant — left, plain text with markdown
+                  <div key={msg.id} className="flex gap-3">
+                    <div className="w-7 h-7 rounded-full bg-[#252525] border border-[#333] flex items-center justify-center text-sm shrink-0 mt-0.5">⚖</div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[11px] text-white/25 font-medium mb-1.5">Specterlaws</p>
+                      <div className="text-[14px] text-white/80 leading-relaxed">
+                        <MarkdownRenderer content={msg.content} />
+                      </div>
+                      {/* Abogado hint */}
+                      <button onClick={() => setModalActivo("abogado")}
+                        className="mt-3 inline-flex items-center gap-1.5 text-[12px] text-white/25 hover:text-white/55 transition-colors">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Hablar con un abogado
+                      </button>
+                    </div>
+                  </div>
+                )
+              )}
+
+              {/* Typing indicator */}
               {cargando && (
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#1a1a2e] border border-white/10 flex items-center justify-center text-base flex-shrink-0 mt-1">⚖</div>
-                  <div className="flex items-center gap-1.5 pt-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce [animation-delay:0ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce [animation-delay:150ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/40 animate-bounce [animation-delay:300ms]" />
+                  <div className="w-7 h-7 rounded-full bg-[#252525] border border-[#333] flex items-center justify-center text-sm shrink-0">⚖</div>
+                  <div className="flex items-center gap-1 pt-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:0ms]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:150ms]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:300ms]" />
                   </div>
                 </div>
               )}
@@ -516,26 +420,23 @@ export default function ChatInterface() {
           )}
         </div>
 
-        {/* Input area */}
-        <div className="shrink-0 px-4 pb-4 pt-2">
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-[#1e1e1e] border border-white/[0.1] rounded-2xl overflow-hidden focus-within:border-white/20 transition-colors">
+        {/* Input */}
+        <div className="shrink-0 px-4 pb-4 pt-2 bg-[#1a1a1a]">
+          <div className="max-w-[800px] mx-auto">
+            <div className="bg-[#252525] border border-[#333] rounded-2xl overflow-hidden focus-within:border-[#444] transition-colors shadow-lg">
               <textarea
                 ref={textareaRef}
                 value={inputTexto}
                 onChange={(e) => setInputTexto(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    enviarMensaje();
-                  }
+                  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); enviarMensaje(); }
                 }}
                 placeholder="Describe tu situación legal…"
                 rows={1}
-                className="w-full bg-transparent px-4 pt-3.5 pb-1 text-sm text-white placeholder:text-white/25 resize-none focus:outline-none leading-relaxed"
-                style={{ maxHeight: "200px" }}
+                className="w-full bg-transparent px-4 pt-3.5 pb-2 text-[14px] text-white/90 placeholder:text-white/25 resize-none focus:outline-none leading-relaxed"
+                style={{ maxHeight: "180px" }}
               />
-              <div className="flex items-center justify-between px-3 pb-3 pt-1 gap-2">
+              <div className="flex items-center justify-between px-3 pb-3 pt-1">
                 <ToolBar
                   onBuscarLeyes={() => setModalActivo("buscar")}
                   onSubirArchivos={() => setModalActivo("subir")}
@@ -549,7 +450,7 @@ export default function ChatInterface() {
                 <button
                   onClick={() => enviarMensaje()}
                   disabled={!inputTexto.trim() || cargando}
-                  className="shrink-0 w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center disabled:opacity-20 hover:bg-white/90 transition-all"
+                  className="w-8 h-8 rounded-lg bg-white text-black flex items-center justify-center disabled:opacity-20 hover:bg-white/90 active:scale-95 transition-all shrink-0"
                   aria-label="Enviar"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -558,67 +459,59 @@ export default function ChatInterface() {
                 </button>
               </div>
             </div>
-            <p className="text-center text-[11px] text-white/20 mt-2">
-              Enter para enviar · Shift+Enter nueva línea · Basado en leyes de Costa Rica
+            <p className="text-center text-[11px] text-white/18 mt-2">
+              Enter para enviar · Shift+Enter nueva línea
             </p>
           </div>
         </div>
       </div>
 
-      {/* Modals */}
-      {modalActivo === "buscar" && (
-        <BuscarLeyesModal
-          onCerrar={() => setModalActivo(null)}
-          onEnviarAlChat={(t) => { enviarMensaje(t); setModalActivo(null); }}
-        />
-      )}
-      {modalActivo === "subir" && (
-        <SubirArchivosModal
-          onCerrar={() => setModalActivo(null)}
-          onArchivoSubido={(a) => setArchivos((p) => [...p, a])}
-        />
-      )}
-      {modalActivo === "expediente" && (
+      {/* Artifact Panel — desktop 45% right */}
+      {hasArtifact && (
         <>
-          <button
-            type="button"
-            className="fixed inset-0 z-40 bg-black/50"
-            onClick={() => setModalActivo(null)}
-            aria-label="Cerrar expediente"
-          />
-          <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm">
-            <ExpedientePanel
-              archivos={archivos}
-              onAgregarAlChat={(a) => { enviarMensaje(`Adjunté el archivo "${a.nombre}" para que lo analices.`); setModalActivo(null); }}
-              onCerrar={() => setModalActivo(null)}
-            />
+          {/* Mobile: full screen modal */}
+          <div className="md:hidden fixed inset-0 z-50 bg-[#1a1a1a] flex flex-col">
+            <ArtifactPanel titulo={artifact!.titulo} contenido={artifact!.contenido} onCerrar={() => setArtifact(null)} />
+          </div>
+          {/* Desktop: right panel */}
+          <div className="hidden md:flex flex-col w-[45%] shrink-0 min-h-0 overflow-hidden">
+            <ArtifactPanel titulo={artifact!.titulo} contenido={artifact!.contenido} onCerrar={() => setArtifact(null)} />
           </div>
         </>
       )}
-      {modalActivo === "abogado" && (
-        <AbogadoModal onCerrar={() => setModalActivo(null)} />
+
+      {/* Modals */}
+      {modalActivo === "buscar" && (
+        <BuscarLeyesModal onCerrar={() => setModalActivo(null)}
+          onEnviarAlChat={(t) => { enviarMensaje(t); setModalActivo(null); }} />
       )}
+      {modalActivo === "subir" && (
+        <SubirArchivosModal onCerrar={() => setModalActivo(null)}
+          onArchivoSubido={(a) => setArchivos((p) => [...p, a])} />
+      )}
+      {modalActivo === "expediente" && (
+        <>
+          <button type="button" className="fixed inset-0 z-40 bg-black/60" onClick={() => setModalActivo(null)} />
+          <div className="fixed inset-y-0 right-0 z-50 w-full max-w-sm">
+            <ExpedientePanel archivos={archivos}
+              onAgregarAlChat={(a) => { enviarMensaje(`Adjunté el archivo "${a.nombre}" para que lo analices.`); setModalActivo(null); }}
+              onCerrar={() => setModalActivo(null)} />
+          </div>
+        </>
+      )}
+      {modalActivo === "abogado" && <AbogadoModal onCerrar={() => setModalActivo(null)} />}
 
       {/* Free limit modal */}
       {modalActivo === "limite" && (
-        <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-4">
-          <div className="bg-[#1e1e1e] border border-white/10 rounded-2xl max-w-sm w-full p-7 text-center">
+        <div className="fixed inset-0 bg-black/70 flex items-end sm:items-center justify-center z-50 p-4">
+          <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl max-w-sm w-full p-7 text-center">
             <div className="text-4xl mb-4">⚖️</div>
             <h2 className="text-lg font-semibold text-white mb-2">Límite gratuito alcanzado</h2>
-            <p className="text-sm text-white/50 mb-6">
-              Usaste tus <strong className="text-white">{LIMITE_GRATIS} consultas gratis</strong>.
-              Registrate para continuar sin límites.
-            </p>
+            <p className="text-sm text-white/45 mb-6">Usaste tus <strong className="text-white">{LIMITE_GRATIS} consultas gratis</strong>. Registrate para continuar.</p>
             <div className="space-y-2.5">
-              <Link href="/registro" className="block w-full bg-white text-black font-semibold rounded-xl py-2.5 text-sm hover:bg-white/90 transition-colors">
-                Registrarme gratis
-              </Link>
-              <Link href="/precios" className="block w-full border border-white/15 text-white/70 rounded-xl py-2.5 text-sm hover:border-white/30 hover:text-white transition-colors">
-                Ver planes
-              </Link>
-              <button onClick={() => setModalActivo(null)} className="text-xs text-white/30 hover:text-white/60 transition-colors pt-1">
-                Cerrar
-              </button>
+              <Link href="/registro" className="block w-full bg-white text-black font-semibold rounded-xl py-2.5 text-sm hover:bg-white/90 transition-colors">Registrarme gratis</Link>
+              <Link href="/precios" className="block w-full border border-[#2a2a2a] text-white/60 rounded-xl py-2.5 text-sm hover:border-[#383838] hover:text-white transition-colors">Ver planes</Link>
+              <button onClick={() => setModalActivo(null)} className="text-[12px] text-white/25 hover:text-white/50 pt-1">Cerrar</button>
             </div>
           </div>
         </div>
@@ -626,20 +519,14 @@ export default function ChatInterface() {
 
       {/* Plan limit modal */}
       {modalActivo === "plan_limit" && (
-        <div className="fixed inset-0 bg-black/60 flex items-end sm:items-center justify-center z-50 p-4">
-          <div className="bg-[#1e1e1e] border border-white/10 rounded-2xl max-w-sm w-full p-7 text-center">
+        <div className="fixed inset-0 bg-black/70 flex items-end sm:items-center justify-center z-50 p-4">
+          <div className="bg-[#1e1e1e] border border-[#2a2a2a] rounded-2xl max-w-sm w-full p-7 text-center">
             <div className="text-4xl mb-4">📊</div>
             <h2 className="text-lg font-semibold text-white mb-2">Límite mensual alcanzado</h2>
-            <p className="text-sm text-white/50 mb-6">
-              Alcanzaste las consultas de tu plan este mes.
-            </p>
+            <p className="text-sm text-white/45 mb-6">Alcanzaste las consultas de tu plan este mes.</p>
             <div className="space-y-2.5">
-              <Link href="/precios" className="block w-full bg-white text-black font-semibold rounded-xl py-2.5 text-sm hover:bg-white/90 transition-colors">
-                Ver planes
-              </Link>
-              <button onClick={() => setModalActivo(null)} className="block w-full border border-white/15 text-white/70 rounded-xl py-2.5 text-sm hover:border-white/30 hover:text-white transition-colors">
-                Cerrar
-              </button>
+              <Link href="/precios" className="block w-full bg-white text-black font-semibold rounded-xl py-2.5 text-sm hover:bg-white/90 transition-colors">Ver planes</Link>
+              <button onClick={() => setModalActivo(null)} className="block w-full border border-[#2a2a2a] text-white/60 rounded-xl py-2.5 text-sm hover:border-[#383838] hover:text-white transition-colors">Cerrar</button>
             </div>
           </div>
         </div>
