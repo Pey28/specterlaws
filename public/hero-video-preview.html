@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Vista previa — Hero con video | Specterlaws</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: #000; color: #fff; }
+    .banner {
+      position: fixed; top: 0; left: 0; right: 0; z-50;
+      background: #1a3a6b; color: #fff; text-align: center;
+      padding: 10px 16px; font-size: 13px;
+    }
+    .hero {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding-top: 3.5rem;
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.55) 45%,
+        rgba(0,0,0,0.75) 100%
+      );
+      pointer-events: none;
+    }
+    .hero-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: #000;
+    }
+    .content {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 2rem;
+      width: 100%;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 2rem;
+      width: fit-content;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; }
+    h1 {
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+      max-width: 52rem;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.8);
+    }
+    h1 .muted { color: rgba(255,255,255,0.4); }
+    p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: rgba(255,255,255,0.45);
+      max-width: 36rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.9);
+    }
+    .ctas { display: flex; flex-direction: column; gap: 0.75rem; }
+    @media (min-width: 640px) { .ctas { flex-direction: row; } }
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 3rem; padding: 0 2rem; border-radius: 999px;
+      background: #fff; color: #000; font-weight: 600; font-size: 0.875rem;
+      text-decoration: none;
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; justify-content: center;
+      height: 3rem; padding: 0 2rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7);
+      font-size: 0.875rem; text-decoration: none;
+    }
+    .stats {
+      position: relative;
+      z-index: 10;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stats-inner {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding: 0 1.5rem;
+    }
+    .stat {
+      padding: 1.5rem 1rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat:last-child { border-right: none; }
+    .stat strong { display: block; font-size: 1.5rem; margin-bottom: 0.25rem; }
+    .stat span { font-size: 0.7rem; color: rgba(255,255,255,0.35); }
+    .note {
+      position: relative; z-index: 10;
+      max-width: 80rem; margin: 0 auto;
+      padding: 1rem 1.5rem 2rem;
+      font-size: 12px; color: rgba(255,255,255,0.4);
+    }
+  </style>
+</head>
+<body>
+  <p class="banner">
+    ⚠️ Solo vista previa — no es la página real. Abre <strong>/</strong> para ver el sitio actual (fondo negro sin video).
+  </p>
+
+  <section class="hero" aria-label="Vista previa del hero con video">
+    <div class="hero-fallback" aria-hidden="true"></div>
+  <!-- Video de ejemplo (Pexels: martillo de juez). En producción irá en /public/hero/ -->
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="https://images.pexels.com/videos/6101348/pictures/preview-0.jpg"
+    >
+      <source src="https://videos.pexels.com/video-files/6101348/6101348-sd_640_360_25fps.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="content">
+      <span class="badge"><span class="dot"></span> Especializado en leyes costarricenses</span>
+      <h1>Conoce y Defiende<br /><span class="muted">Tus Derechos</span><br />en Costa Rica</h1>
+      <p>
+        Inteligencia artificial entrenada con la legislación costarricense.
+        Consulta sobre derecho laboral, civil, penal y del consumidor —
+        en segundos, en español.
+      </p>
+      <div class="ctas">
+        <a class="btn-primary" href="#">Consultar Ahora — Es Gratis</a>
+        <a class="btn-ghost" href="#">Ver áreas legales</a>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stats-inner">
+        <div class="stat"><strong>100%</strong><span>Ley Costarricense</span></div>
+        <div class="stat"><strong>24/7</strong><span>Disponible</span></div>
+        <div class="stat"><strong>Gratis</strong><span>Consulta inicial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">
+    Video propuesto: «Judge Hammering a Gavel» (Pexels #6101348). Si no carga, verás fondo negro (fallback).
+    Overlay: ~55–75% negro para legibilidad. Mismo contenido que el hero actual encima.
+  </p>
+</body>
+</html>

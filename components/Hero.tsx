@@ -1,30 +1,30 @@
 import TypewriterText from "@/components/ui/TypewriterText";
+import HeroBackgroundVideo from "@/components/HeroBackgroundVideo";
 
 export default function Hero() {
   return (
     <section className="relative min-h-[100dvh] flex flex-col justify-between bg-black overflow-hidden lexcr-nav-offset">
-      {/* Subtle radial glow */}
+      <HeroBackgroundVideo />
+
       <div
-        className="pointer-events-none absolute inset-0 z-0"
+        className="pointer-events-none absolute inset-0 z-[1]"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,255,255,0.04) 0%, transparent 70%)",
+            "linear-gradient(180deg, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.78) 100%)",
         }}
         aria-hidden="true"
       />
 
       {/* Main content */}
       <div className="relative z-10 flex-1 flex flex-col justify-center w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16 sm:py-24">
-        {/* Badge */}
         <div className="mb-8 sm:mb-10 lexcr-animate-in">
-          <span className="inline-flex items-center gap-2.5 border border-white/15 rounded-full px-4 py-1.5 text-xs font-medium text-white/60 tracking-wide">
+          <span className="inline-flex items-center gap-2.5 border border-white/15 rounded-full px-4 py-1.5 text-xs font-medium text-white/60 tracking-wide bg-black/30 backdrop-blur-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             Especializado en leyes costarricenses
           </span>
         </div>
 
-        {/* Headline */}
-        <h1 className="text-[clamp(2.6rem,8vw,7rem)] font-bold text-white leading-[0.95] tracking-[-0.03em] mb-8 sm:mb-10 max-w-5xl">
+        <h1 className="text-[clamp(2.6rem,8vw,7rem)] font-bold text-white leading-[0.95] tracking-[-0.03em] mb-8 sm:mb-10 max-w-5xl [text-shadow:0_2px_24px_rgba(0,0,0,0.85)]">
           <TypewriterText>Conoce y Defiende </TypewriterText>
           <br className="hidden sm:block" />
           <span className="text-white/40">Tus Derechos</span>
@@ -32,14 +32,12 @@ export default function Hero() {
           <TypewriterText speedMs={22}> en Costa Rica</TypewriterText>
         </h1>
 
-        {/* Subtitle */}
-        <p className="text-base sm:text-xl text-white/45 max-w-2xl mb-10 sm:mb-14 leading-relaxed">
+        <p className="text-base sm:text-xl text-white/45 max-w-2xl mb-10 sm:mb-14 leading-relaxed [text-shadow:0_1px_12px_rgba(0,0,0,0.9)]">
           Inteligencia artificial entrenada con la legislación costarricense.
           Consulta sobre derecho laboral, civil, penal y del consumidor —
           en segundos, en español.
         </p>
 
-        {/* CTAs */}
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lexcr-animate-in" style={{ animationDelay: "120ms" }}>
           <a
             href="/chat"
@@ -48,16 +46,15 @@ export default function Hero() {
             Consultar Ahora — Es Gratis
           </a>
           <a
-            href="#areas"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-full border border-white/20 text-white/70 font-medium text-sm hover:border-white/40 hover:text-white transition-colors"
+            href="#documentos"
+            className="inline-flex items-center justify-center h-12 px-8 rounded-full border border-white/20 text-white/70 font-medium text-sm hover:border-white/40 hover:text-white transition-colors bg-black/20 backdrop-blur-sm"
           >
-            Ver áreas legales
+            Ver documentos
           </a>
         </div>
       </div>
 
-      {/* Stats bar */}
-      <div className="relative z-10 w-full border-t border-white/[0.08] lexcr-animate-in" style={{ animationDelay: "220ms" }}>
+      <div className="relative z-10 w-full border-t border-white/[0.08] lexcr-animate-in bg-black/40 backdrop-blur-sm" style={{ animationDelay: "220ms" }}>
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid grid-cols-3 divide-x divide-white/[0.08]">
             {[
