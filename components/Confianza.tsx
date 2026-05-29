@@ -1,87 +1,133 @@
-const instituciones = [
-  { nombre: "MTSS", desc: "Ministerio de Trabajo", icono: "🏢" },
-  { nombre: "MEIC", desc: "Protección al Consumidor", icono: "🛡️" },
-  { nombre: "OIJ", desc: "Investigación Judicial", icono: "🔍" },
-  { nombre: "Defensoría", desc: "Defensoría de los Hab.", icono: "⚖️" },
-  { nombre: "SUGEF", desc: "Supervisión Financiera", icono: "🏦" },
-  { nombre: "Poder Judicial", desc: "Sistema de Justicia", icono: "🏛️" },
+import ScrollReveal from "@/components/ui/ScrollReveal";
+
+const stats = [
+  { value: "4", label: "áreas del derecho costarricense" },
+  { value: "24/7", label: "disponibilidad del asistente" },
+  { value: "100%", label: "basado en leyes de Costa Rica" },
+  { value: "< 10s", label: "tiempo promedio de respuesta" },
+];
+
+const testimonios = [
+  {
+    cita: "Finalmente entiendo qué me corresponde. Me explicó mis derechos laborales de forma clara, sin tecnicismos.",
+    autor: "Usuario de San José",
+    contexto: "Consulta laboral",
+  },
+  {
+    cita: "Pensé que necesitaba un abogado para entender mi contrato de alquiler. Specterlaws lo explicó en segundos.",
+    autor: "Usuaria de Heredia",
+    contexto: "Derecho civil",
+  },
+  {
+    cita: "Me orientó exactamente a qué institución acudir y qué documentos llevar. Ahorré tiempo y dinero.",
+    autor: "Usuario de Cartago",
+    contexto: "Denuncia MTSS",
+  },
 ];
 
 const razones = [
-  {
-    icono: "📚",
-    titulo: "Legislación Actualizada",
-    desc: "Entrenado con el Código de Trabajo, Código Civil, Código Penal y todas las leyes vigentes de Costa Rica.",
-  },
-  {
-    icono: "🇨🇷",
-    titulo: "100% Costarricense",
-    desc: "Diseñado exclusivamente para la realidad jurídica de Costa Rica. No respuestas genéricas de otras jurisdicciones.",
-  },
-  {
-    icono: "🔐",
-    titulo: "Privacidad Garantizada",
-    desc: "Tu consulta es confidencial. No almacenamos datos personales ni compartimos tu información con terceros.",
-  },
-  {
-    icono: "⚡",
-    titulo: "Respuesta Inmediata",
-    desc: "Sin filas, sin citas. Recibe orientación legal en segundos, desde cualquier dispositivo.",
-  },
+  { titulo: "Legislación actualizada", desc: "Entrenado con el Código de Trabajo, Código Civil, Código Penal y todas las leyes vigentes de Costa Rica." },
+  { titulo: "100% Costarricense", desc: "Diseñado exclusivamente para la realidad jurídica de Costa Rica. No respuestas genéricas de otras jurisdicciones." },
+  { titulo: "Privacidad garantizada", desc: "Tu consulta es confidencial. No almacenamos datos personales ni compartimos tu información con terceros." },
+  { titulo: "Respuesta inmediata", desc: "Sin filas, sin citas. Recibe orientación legal en segundos, desde cualquier dispositivo." },
+];
+
+const instituciones = [
+  { nombre: "MTSS", desc: "Ministerio de Trabajo" },
+  { nombre: "MEIC", desc: "Protección al Consumidor" },
+  { nombre: "OIJ", desc: "Investigación Judicial" },
+  { nombre: "Defensoría", desc: "Defensoría de los Hab." },
+  { nombre: "SUGEF", desc: "Supervisión Financiera" },
+  { nombre: "Poder Judicial", desc: "Sistema de Justicia" },
 ];
 
 export default function Confianza() {
   return (
-    <section id="nosotros" className="lexcr-section-pad">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Por qué confiar */}
-        <div className="text-center mb-10 sm:mb-16 lexcr-animate-in">
-          <span className="text-cr-red font-semibold text-xs sm:text-sm uppercase tracking-wider">Confianza</span>
-          <h2 className="text-2xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-3 sm:mb-4 px-2">
-            ¿Por qué usar Specterlaws?
-          </h2>
-        </div>
+    <section id="nosotros" className="bg-black">
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-20">
-          {razones.map((r) => (
-            <div key={r.titulo} className="rounded-2xl p-6 transition-shadow lexcr-card">
-              <div className="w-12 h-12 rounded-full border border-white/20 bg-white/5 flex items-center justify-center text-2xl mb-4">
-                {r.icono}
-              </div>
-              <h3 className="font-bold text-white text-lg mb-2">{r.titulo}</h3>
-              <p className="text-white/65 text-sm leading-relaxed">{r.desc}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Instituciones */}
-        <div className="rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center lexcr-card border border-cr-blue/25">
-          <h3 className="text-white font-bold text-xl mb-2">
-            Te orientamos hacia las instituciones correctas
-          </h3>
-          <p className="text-white/60 text-sm mb-8">
-            Specterlaws te dice exactamente a qué entidad costarricense acudir según tu caso.
-          </p>
-          <div className="lexcr-marquee">
-            <div className="lexcr-marquee-track">
-              {[...instituciones, ...instituciones].map((inst, i) => (
-                <div
-                  key={`${inst.nombre}-${i}`}
-                  className="rounded-2xl px-6 py-4 flex items-center gap-3 lexcr-glass shrink-0 min-w-[200px]"
-                >
-                  <span className="w-10 h-10 rounded-full border border-white/20 bg-white/5 text-xl flex items-center justify-center">
-                    {inst.icono}
-                  </span>
-                  <div className="text-left">
-                    <div className="text-white font-bold text-sm">{inst.nombre}</div>
-                    <div className="text-white/55 text-xs mt-0.5">{inst.desc}</div>
-                  </div>
+      {/* Stats */}
+      <div className="border-t border-white/[0.08] lexcr-section-pad">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <ScrollReveal className="mb-16">
+            <p className="hv-section-label mb-4">En números</p>
+          </ScrollReveal>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/[0.08]">
+            {stats.map((s, i) => (
+              <ScrollReveal key={s.label} delay={i * 60}>
+                <div className="bg-black p-8 sm:p-10">
+                  <div className="hv-stat-number mb-2">{s.value}</div>
+                  <div className="text-xs sm:text-sm text-white/35 leading-snug">{s.label}</div>
                 </div>
-              ))}
-            </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* Testimonios */}
+      <div className="border-t border-white/[0.08] lexcr-section-pad">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <ScrollReveal className="mb-16">
+            <p className="hv-section-label mb-4">Lo que dicen</p>
+            <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white tracking-[-0.02em] leading-tight max-w-2xl">
+              Usuarios que conocieron sus derechos
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/[0.08]">
+            {testimonios.map((t, i) => (
+              <ScrollReveal key={t.autor} delay={i * 100}>
+                <div className="bg-black p-8 sm:p-10 flex flex-col justify-between min-h-[220px]">
+                  <p className="hv-quote mb-8">&ldquo;{t.cita}&rdquo;</p>
+                  <div>
+                    <div className="text-sm font-medium text-white">{t.autor}</div>
+                    <div className="hv-section-label mt-1">{t.contexto}</div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Razones */}
+      <div className="border-t border-white/[0.08] lexcr-section-pad">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <ScrollReveal className="mb-16">
+            <p className="hv-section-label mb-4">¿Por qué Specterlaws?</p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/[0.08]">
+            {razones.map((r, i) => (
+              <ScrollReveal key={r.titulo} delay={i * 60}>
+                <div className="bg-black p-8 sm:p-10">
+                  <h3 className="text-lg font-bold text-white mb-3 tracking-tight">{r.titulo}</h3>
+                  <p className="text-sm text-white/40 leading-relaxed">{r.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Instituciones marquee */}
+      <div className="border-t border-white/[0.08] py-10 overflow-hidden">
+        <div className="lexcr-marquee">
+          <div className="lexcr-marquee-track gap-0">
+            {[...instituciones, ...instituciones].map((inst, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-4 px-10 border-r border-white/[0.08] shrink-0"
+              >
+                <div>
+                  <div className="text-sm font-bold text-white/60">{inst.nombre}</div>
+                  <div className="text-xs text-white/25 mt-0.5">{inst.desc}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
     </section>
   );
 }

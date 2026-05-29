@@ -89,7 +89,7 @@ export default function Footer() {
               <li>📧 hola@specterlaws.cr</li>
               <li className="pt-2">
                 <a
-                  href="/chat"
+                  href="#consultar"
                   className="inline-block bg-cr-red hover:bg-cr-red-light text-white text-xs font-semibold px-4 py-2 rounded-full transition-colors"
                 >
                   Consulta Gratis

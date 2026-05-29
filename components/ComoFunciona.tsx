@@ -1,72 +1,63 @@
-import type { CSSProperties } from "react";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const pasos = [
   {
     numero: "01",
     titulo: "Describe tu situación",
     descripcion: "Escribe en español, con tus propias palabras. No necesitas saber términos legales — solo cuéntanos qué pasó.",
-    icono: "💬",
-    color: "#3B82F6",
   },
   {
     numero: "02",
     titulo: "Recibe análisis legal",
     descripcion: "Specterlaws analiza tu caso con base en el Código de Trabajo, Código Civil, Código Penal y la Ley 7472 vigentes en Costa Rica.",
-    icono: "🔍",
-    color: "#8B5CF6",
   },
   {
     numero: "03",
     titulo: "Conoce tus opciones",
-    descripcion: "Obtienes una explicación clara de tus derechos, las instituciones a las que puedes acudir (MTSS, MEIC, OIJ, Defensoría) y los pasos a seguir.",
-    icono: "📋",
-    color: "#10B981",
+    descripcion: "Obtienes una explicación clara de tus derechos, las instituciones a las que puedes acudir y los pasos exactos a seguir.",
   },
 ];
 
 export default function ComoFunciona() {
   return (
-    <section id="como-funciona" className="lexcr-section-pad">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-10 sm:mb-16 lexcr-animate-in">
-          <span className="text-cr-red font-semibold text-xs sm:text-sm uppercase tracking-wider">Simple y rápido</span>
-          <h2 className="text-2xl sm:text-4xl font-serif font-semibold text-white mt-2 mb-3 sm:mb-4 px-2">
-            ¿Cómo funciona Specterlaws?
+    <section id="como-funciona" className="bg-black lexcr-section-pad border-t border-white/[0.08]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
+        <ScrollReveal className="mb-16 sm:mb-20">
+          <p className="hv-section-label mb-4">Simple y rápido</p>
+          <h2 className="text-[clamp(2rem,5vw,3.5rem)] font-bold text-white tracking-[-0.02em] leading-tight max-w-2xl">
+            Asesoría legal en tres pasos
           </h2>
-          <p className="text-white/65 max-w-xl mx-auto text-base sm:text-lg px-2">
-            Sin citas, sin formularios, sin esperas. Asesoría legal disponible las 24 horas.
-          </p>
-        </div>
+        </ScrollReveal>
 
-        {/* Steps */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 relative">
-          {/* Connector line (desktop) */}
-          <div className="hidden md:block absolute top-14 left-[16.66%] right-[16.66%] h-px bg-gradient-to-r from-cr-blue via-cr-red to-cr-blue opacity-30" />
-
-          {pasos.map((paso) => (
-            <div
-              key={paso.numero}
-              className="relative flex flex-col items-center text-center rounded-2xl p-6 sm:p-8 lexcr-future-card"
-              style={{ "--card-color": paso.color } as CSSProperties}
-            >
-              {/* Step number */}
-              <div className="lexcr-step-icon lexcr-future-icon w-16 h-16 flex items-center justify-center text-2xl mb-5">
-                <span>{paso.icono}</span>
+        <div className="space-y-0">
+          {pasos.map((paso, i) => (
+            <ScrollReveal key={paso.numero} delay={i * 100}>
+              <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-6 md:gap-16 py-10 sm:py-12 border-t border-white/[0.08] group">
+                <div>
+                  <span className="text-[4rem] sm:text-[5rem] font-bold text-white/08 leading-none tracking-tighter">
+                    {paso.numero}
+                  </span>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 tracking-tight">
+                    {paso.titulo}
+                  </h3>
+                  <p className="text-white/45 leading-relaxed max-w-xl">
+                    {paso.descripcion}
+                  </p>
+                </div>
               </div>
-              <span className="text-xs font-bold tracking-widest mb-2 text-white/70">
-                PASO {paso.numero}
-              </span>
-              <h3 className="text-xl font-bold text-white mb-3">{paso.titulo}</h3>
-              <p className="text-white/65 leading-relaxed max-w-xs">{paso.descripcion}</p>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
-        {/* Disclaimer */}
-        <p className="text-center text-xs text-white/45 mt-14 max-w-2xl mx-auto">
-          Specterlaws brinda información legal orientativa basada en la legislación costarricense vigente. No reemplaza la consulta con un abogado colegiado para casos complejos.
-        </p>
+        <div className="border-t border-white/[0.08] pt-8 mt-2">
+          <p className="text-xs text-white/25 max-w-2xl">
+            Specterlaws brinda información legal orientativa basada en la legislación costarricense vigente.
+            No reemplaza la consulta con un abogado colegiado para casos complejos.
+          </p>
+        </div>
       </div>
     </section>
   );
