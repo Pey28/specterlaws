@@ -10,6 +10,7 @@ import ExpedientePanel from "./ExpedientePanel";
 import AbogadoModal from "./AbogadoModal";
 import MarkdownRenderer from "./MarkdownRenderer";
 import ArtifactPanel from "./ArtifactPanel";
+import ThinkingIndicator from "./ThinkingIndicator";
 import type { Archivo, Mensaje, Conversacion } from "./types";
 
 const LIMITE_GRATIS = 3;
@@ -404,17 +405,8 @@ export default function ChatInterface() {
                 )
               )}
 
-              {/* Typing indicator */}
-              {cargando && (
-                <div className="flex gap-3">
-                  <div className="w-7 h-7 rounded-full bg-[#252525] border border-[#333] flex items-center justify-center text-sm shrink-0">⚖</div>
-                  <div className="flex items-center gap-1 pt-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:0ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:150ms]" />
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/35 animate-bounce [animation-delay:300ms]" />
-                  </div>
-                </div>
-              )}
+              {/* Thinking indicator */}
+              {cargando && <ThinkingIndicator />}
               <div ref={chatEndRef} />
             </div>
           )}
