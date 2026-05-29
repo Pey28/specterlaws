@@ -12,59 +12,74 @@ type Props = {
 };
 
 const botones = [
-  { key: "buscar", icono: "🌐", label: "Buscar Leyes" },
-  { key: "subir", icono: "⬆️", label: "Subir Archivos" },
-  { key: "expediente", icono: "📁", label: "Expediente" },
-  { key: "historial", icono: "🗄️", label: "Historial" },
-  { key: "abogado", icono: "⚖️", label: "Abogado" },
+  {
+    key: "buscar",
+    label: "Buscar leyes",
+    icon: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+      </svg>
+    ),
+  },
+  {
+    key: "subir",
+    label: "Subir archivo",
+    icon: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+      </svg>
+    ),
+  },
+  {
+    key: "expediente",
+    label: "Expediente",
+    icon: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+      </svg>
+    ),
+  },
+  {
+    key: "abogado",
+    label: "Hablar con abogado",
+    icon: (
+      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+      </svg>
+    ),
+  },
 ] as const;
 
 export default function ToolBar({
   onBuscarLeyes,
   onSubirArchivos,
   onExpediente,
-  onHistorial,
   onAbogado,
   archivosCount,
-  historialCount,
-  panelActivo,
 }: Props) {
   const handlers: Record<string, () => void> = {
     buscar: onBuscarLeyes,
     subir: onSubirArchivos,
     expediente: onExpediente,
-    historial: onHistorial,
     abogado: onAbogado,
   };
 
-  const badges: Record<string, number> = {
-    expediente: archivosCount,
-    historial: historialCount,
-  };
-
-  const activos: Record<string, boolean> = {
-    expediente: panelActivo === "expediente",
-    historial: panelActivo === "historial",
-  };
+  const badges: Record<string, number> = { expediente: archivosCount };
 
   return (
-    <div className="lexcr-mobile-scroll flex items-center gap-2 py-2 mt-1 overflow-x-auto sm:flex-wrap">
+    <div className="flex items-center gap-1 flex-wrap">
       {botones.map((b) => (
         <button
           key={b.key}
+          type="button"
           onClick={handlers[b.key]}
-          className={`relative lexcr-mobile-tap flex items-center gap-2 px-3.5 py-3 sm:py-2.5 rounded-xl text-sm sm:text-xs font-medium transition-all shrink-0 ${
-            activos[b.key]
-              ? "bg-cr-blue text-white border border-cr-blue/50"
-              : b.key === "abogado"
-              ? "text-white/80 border border-cr-red/30 bg-cr-red/10 hover:bg-cr-red/20"
-              : "text-white/60 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white"
-          }`}
+          title={b.label}
+          className="relative p-1.5 rounded-lg text-white/30 hover:text-white/70 hover:bg-white/8 transition-colors"
+          aria-label={b.label}
         >
-          <span className="text-base">{b.icono}</span>
-          <span>{b.label}</span>
-          {badges[b.key] > 0 && (
-            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-cr-red text-white text-[10px] flex items-center justify-center font-bold leading-none">
+          {b.icon}
+          {(badges[b.key] ?? 0) > 0 && (
+            <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-white text-black text-[9px] flex items-center justify-center font-bold leading-none">
               {badges[b.key] > 9 ? "9+" : badges[b.key]}
             </span>
           )}
